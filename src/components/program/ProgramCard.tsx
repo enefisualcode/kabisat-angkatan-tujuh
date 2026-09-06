@@ -19,7 +19,7 @@ export default function ProgramCard({
     <Link
       href={`/program/${program.slug}`}
       className={cn(
-        "group flex w-72 shrink-0 snap-start flex-col overflow-hidden rounded-card border border-navy/10 bg-white transition-shadow duration-300 hover:shadow-lg hover:shadow-navy/10 sm:w-80",
+        "group flex h-full w-72 shrink-0 snap-start flex-col overflow-hidden rounded-card border border-navy/10 bg-white transition-shadow duration-300 hover:shadow-lg hover:shadow-navy/10 sm:w-80",
         className
       )}
     >
