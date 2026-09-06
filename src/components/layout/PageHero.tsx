@@ -14,7 +14,7 @@ export default function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden bg-navy pt-40 pb-20 sm:pt-48 sm:pb-24">
+    <section className="relative overflow-hidden bg-navy pt-44 pb-20 sm:pt-52 sm:pb-24">
       <Image
         src={site.logos.symbol}
         alt=""
