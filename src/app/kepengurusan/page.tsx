@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default function KepengurusanPage() {
-  const ketua = members.find((m) => m.role === "Ketua");
-  const wakilKetua = members.find((m) => m.role === "Wakil Ketua");
-  const sekretaris = members.find((m) => m.role === "Sekretaris");
-  const bendahara = members.find((m) => m.role === "Bendahara");
+  const ketua = members.filter((m) => m.role === "Ketua");
+  const wakilKetua = members.filter((m) => m.role === "Wakil Ketua");
+  const sekretaris = members.filter((m) => m.role === "Sekretaris");
+  const bendahara = members.filter((m) => m.role === "Bendahara");
 
   return (
     <>
@@ -28,38 +28,49 @@ export default function KepengurusanPage() {
       <section className="py-20 sm:py-24">
         <Container>
           <div className="flex flex-col items-center gap-12">
-            {ketua ? (
-              <FadeIn>
-                <MemberCard member={ketua} className="mx-auto w-44 sm:w-56" />
-              </FadeIn>
+            {ketua.length > 0 ? (
+              <div className="flex flex-wrap justify-center gap-8">
+                {ketua.map((member, index) => (
+                  <FadeIn key={member.id} delay={index * 0.06}>
+                    <MemberCard
+                      member={member}
+                      className="mx-auto w-44 sm:w-56"
+                    />
+                  </FadeIn>
+                ))}
+              </div>
             ) : null}
 
-            {wakilKetua ? (
-              <FadeIn delay={0.08}>
-                <MemberCard
-                  member={wakilKetua}
-                  className="mx-auto w-40 sm:w-48"
-                />
-              </FadeIn>
+            {wakilKetua.length > 0 ? (
+              <div className="flex flex-wrap justify-center gap-8">
+                {wakilKetua.map((member, index) => (
+                  <FadeIn key={member.id} delay={0.08 + index * 0.06}>
+                    <MemberCard
+                      member={member}
+                      className="mx-auto w-40 sm:w-48"
+                    />
+                  </FadeIn>
+                ))}
+              </div>
             ) : null}
 
             <div className="flex flex-wrap justify-center gap-8 sm:gap-14">
-              {sekretaris ? (
-                <FadeIn delay={0.14}>
+              {sekretaris.map((member, index) => (
+                <FadeIn key={member.id} delay={0.14 + index * 0.06}>
                   <MemberCard
-                    member={sekretaris}
+                    member={member}
                     className="mx-auto w-36 sm:w-44"
                   />
                 </FadeIn>
-              ) : null}
-              {bendahara ? (
-                <FadeIn delay={0.2}>
+              ))}
+              {bendahara.map((member, index) => (
+                <FadeIn key={member.id} delay={0.2 + index * 0.06}>
                   <MemberCard
-                    member={bendahara}
+                    member={member}
                     className="mx-auto w-36 sm:w-44"
                   />
                 </FadeIn>
-              ) : null}
+              ))}
             </div>
           </div>
         </Container>

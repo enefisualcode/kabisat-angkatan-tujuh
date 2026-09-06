@@ -12,7 +12,7 @@ export default function NotFound() {
         aria-hidden
         width={700}
         height={700}
-        className="pointer-events-none absolute top-1/2 left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 opacity-[0.06]"
+        className="pointer-events-none absolute top-1/2 left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 object-contain opacity-[0.06]"
       />
       <Container className="relative max-w-xl text-center">
         <p className="mb-4 text-xs font-semibold tracking-[0.25em] text-gold-soft uppercase">

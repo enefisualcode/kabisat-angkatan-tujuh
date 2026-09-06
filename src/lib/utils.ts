@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { ProgramStatus } from "@/types";
+import type { ProgramStatus, ProgramStage } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -36,6 +36,18 @@ export const STATUS_STYLES_ON_DARK: Record<ProgramStatus, string> = {
 export function statusLabel(status: ProgramStatus) {
   return STATUS_LABELS[status];
 }
+
+export const STAGE_LABELS: Record<ProgramStage, string> = {
+  "coming-soon": "Coming Soon",
+  "on-going": "On Going",
+  done: "Done",
+};
+
+export const STAGE_STYLES: Record<ProgramStage, string> = {
+  "coming-soon": "bg-gray/15 text-gray-dark border-gray/30",
+  "on-going": "bg-gold/15 text-gold-dark border-gold/40",
+  done: "bg-navy text-cream border-navy",
+};
 
 export function formatYear(year: number) {
   return year.toString();

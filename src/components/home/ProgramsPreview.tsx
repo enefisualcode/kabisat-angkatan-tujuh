@@ -10,12 +10,12 @@ export default function ProgramsPreview() {
   const featured = programs.slice(0, 3);
 
   return (
-    <section className="py-24 sm:py-28">
+    <section id="program" className="scroll-mt-24 py-24 sm:py-28">
       <Container>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <FadeIn>
             <SectionHeading
-              eyebrow="Program & Kegiatan"
+              eyebrow="Agenda & Acara"
               title="Yang Sedang Kami Siapkan"
               description="Ikuti perkembangan program dan kegiatan KABISAT Angkatan Tujuh."
             />

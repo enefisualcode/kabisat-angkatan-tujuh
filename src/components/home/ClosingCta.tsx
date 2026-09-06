@@ -13,7 +13,7 @@ export default function ClosingCta() {
         aria-hidden
         width={800}
         height={800}
-        className="pointer-events-none absolute -right-40 -bottom-40 h-[42rem] w-[42rem] opacity-[0.08]"
+        className="pointer-events-none absolute -right-40 -bottom-40 h-[42rem] w-[42rem] object-contain opacity-[0.08]"
       />
       <Container className="relative max-w-2xl text-center">
         <FadeIn>

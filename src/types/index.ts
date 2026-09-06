@@ -1,3 +1,5 @@
+import type { ProgramIconName } from "@/lib/program-icons";
+
 export type ProgramStatus =
   | "idea"
   | "planned"
@@ -5,6 +7,8 @@ export type ProgramStatus =
   | "upcoming"
   | "completed"
   | "postponed";
+
+export type ProgramStage = "coming-soon" | "on-going" | "done";
 
 export interface Milestone {
   title: string;
@@ -18,12 +22,13 @@ export interface Program {
   title: string;
   shortDescription: string;
   description: string;
-  estimatedDate: string;
+  estimatedDate?: string;
   actualDate?: string;
   location?: string;
   status: ProgramStatus;
-  progress?: number;
+  stage: ProgramStage;
   coverImage?: string;
+  icon?: ProgramIconName;
   pic?: string;
   participantCount?: number;
   milestones: Milestone[];
@@ -49,26 +54,3 @@ export interface GalleryItem {
   featured?: boolean;
 }
 
-export interface Update {
-  id: string;
-  date: string;
-  title: string;
-  excerpt: string;
-  programSlug?: string;
-}
-
-export interface AgendaItem {
-  id: string;
-  year: number;
-  month: string;
-  title: string;
-  status: ProgramStatus;
-  programSlug?: string;
-}
-
-export interface StatItem {
-  id: string;
-  value: number;
-  suffix?: string;
-  label: string;
-}

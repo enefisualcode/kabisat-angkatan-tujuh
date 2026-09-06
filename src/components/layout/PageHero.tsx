@@ -21,7 +21,7 @@ export default function PageHero({
         aria-hidden
         width={700}
         height={700}
-        className="pointer-events-none absolute -top-24 -right-24 h-[26rem] w-[26rem] opacity-[0.06] sm:h-[34rem] sm:w-[34rem]"
+        className="pointer-events-none absolute -top-24 -right-24 h-[26rem] w-[26rem] object-contain opacity-[0.06] sm:h-[34rem] sm:w-[34rem]"
       />
       <Container className="relative max-w-3xl">
         <p className="mb-4 text-xs font-semibold tracking-[0.25em] text-gold-soft uppercase">

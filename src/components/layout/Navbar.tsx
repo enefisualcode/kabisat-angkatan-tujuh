@@ -56,7 +56,7 @@ export default function Navbar() {
             alt=""
             width={36}
             height={36}
-            className="h-9 w-9"
+            className="h-9 w-9 object-contain"
             priority
           />
           <span
@@ -100,7 +100,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <Link
-            href="/#agenda"
+            href="/#program"
             className="hidden rounded-full bg-gold px-4 py-2 text-sm font-semibold text-navy transition-transform duration-200 hover:scale-[1.03] sm:inline-block"
           >
             Lihat Agenda
@@ -140,7 +140,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
-                href="/#agenda"
+                href="/#program"
                 className="mt-2 rounded-full bg-gold px-4 py-3 text-center text-sm font-semibold text-navy"
               >
                 Lihat Agenda

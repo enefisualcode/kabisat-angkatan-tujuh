@@ -14,10 +14,11 @@ import PageHero from "@/components/layout/PageHero";
 import Container from "@/components/ui/Container";
 import FadeIn from "@/components/ui/FadeIn";
 import StatusBadge from "@/components/ui/StatusBadge";
-import ProgressBar from "@/components/ui/ProgressBar";
 import MilestoneChecklist from "@/components/program/MilestoneChecklist";
 import { programs, getProgramBySlug } from "@/data/programs";
 import { getGalleryForEvent } from "@/data/gallery";
+import { cn, STAGE_LABELS, STAGE_STYLES } from "@/lib/utils";
+import { PROGRAM_ICONS } from "@/lib/program-icons";
 
 export function generateStaticParams() {
   return programs.map((program) => ({ slug: program.slug }));
@@ -46,7 +47,7 @@ function InfoItem({
 }: {
   icon: React.ReactNode;
   label: string;
-  value: string;
+  value?: string;
 }) {
   return (
     <div className="flex items-start gap-3">
@@ -70,24 +71,31 @@ export default async function ProgramDetailPage(
 
   const isCompleted = program.status === "completed";
   const gallery = getGalleryForEvent(program.title);
+  const dateValue =
+    isCompleted && program.actualDate
+      ? program.actualDate
+      : program.estimatedDate;
+  const Icon = program.icon ? PROGRAM_ICONS[program.icon] : null;
 
   return (
     <>
       <PageHero eyebrow="Program KABISAT" title={program.title}>
-        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-cream/75">
-          <span className="flex items-center gap-1.5">
-            <CalendarDays size={15} />
-            {isCompleted && program.actualDate
-              ? program.actualDate
-              : program.estimatedDate}
-          </span>
-          {program.location ? (
-            <span className="flex items-center gap-1.5">
-              <MapPin size={15} />
-              {program.location}
-            </span>
-          ) : null}
-        </div>
+        {dateValue || program.location ? (
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-cream/75">
+            {dateValue ? (
+              <span className="flex items-center gap-1.5">
+                <CalendarDays size={15} />
+                {dateValue}
+              </span>
+            ) : null}
+            {program.location ? (
+              <span className="flex items-center gap-1.5">
+                <MapPin size={15} />
+                {program.location}
+              </span>
+            ) : null}
+          </div>
+        ) : null}
         <div className="mt-5">
           <StatusBadge status={program.status} tone="onDark" />
         </div>
@@ -113,6 +121,12 @@ export default async function ProgramDetailPage(
             />
           </div>
         </div>
+      ) : Icon ? (
+        <div className="mx-auto -mt-10 max-w-5xl px-6 sm:-mt-14 sm:px-8">
+          <div className="relative flex aspect-[16/9] items-center justify-center overflow-hidden rounded-card-lg bg-navy/5 shadow-xl shadow-navy/20">
+            <Icon size={88} strokeWidth={1.5} className="text-navy/25" />
+          </div>
+        </div>
       ) : null}
 
       <section className="py-20 sm:py-24">
@@ -132,15 +146,13 @@ export default async function ProgramDetailPage(
                 Informasi Program
               </h3>
               <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <InfoItem
-                  icon={<CalendarDays size={17} />}
-                  label={isCompleted ? "Dilaksanakan" : "Estimasi Waktu"}
-                  value={
-                    isCompleted && program.actualDate
-                      ? program.actualDate
-                      : program.estimatedDate
-                  }
-                />
+                {dateValue ? (
+                  <InfoItem
+                    icon={<CalendarDays size={17} />}
+                    label={isCompleted ? "Dilaksanakan" : "Estimasi Waktu"}
+                    value={dateValue}
+                  />
+                ) : null}
                 {program.location ? (
                   <InfoItem
                     icon={<MapPin size={17} />}
@@ -166,21 +178,21 @@ export default async function ProgramDetailPage(
             </div>
           </FadeIn>
 
-          {typeof program.progress === "number" ? (
-            <FadeIn delay={0.16}>
-              <div className="mt-10">
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="font-heading text-lg font-bold text-navy">
-                    Progress
-                  </h3>
-                  <span className="text-sm font-semibold text-navy/60">
-                    {program.progress}%
-                  </span>
-                </div>
-                <ProgressBar value={program.progress} className="h-2.5" />
-              </div>
-            </FadeIn>
-          ) : null}
+          <FadeIn delay={0.16}>
+            <div className="mt-10 flex items-center justify-between">
+              <h3 className="font-heading text-lg font-bold text-navy">
+                Tahap
+              </h3>
+              <span
+                className={cn(
+                  "inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide uppercase",
+                  STAGE_STYLES[program.stage]
+                )}
+              >
+                {STAGE_LABELS[program.stage]}
+              </span>
+            </div>
+          </FadeIn>
 
           {program.milestones.length > 0 ? (
             <FadeIn delay={0.22}>

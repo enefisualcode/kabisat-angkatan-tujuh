@@ -1,5 +1,3 @@
-import type { StatItem } from "@/types";
-
 // NOTE: ganti seluruh nilai di file ini dengan data resmi KABISAT saat sudah tersedia.
 export const site = {
   name: "KABISAT Angkatan Tujuh",
@@ -20,23 +18,8 @@ export const site = {
     symbol: "/logos/kabisat-symbol.png",
   },
 
-  heroImage: "/images/hero/alumni-group.png",
+  heroImage: "/images/hero/alumni-group.jpeg",
   ogImage: "/og-image.png",
-
-  aboutShort: {
-    heading: "Kebersamaan yang Terus Berlanjut",
-    paragraphs: [
-      "Kebersamaan tidak berhenti setelah masa pendidikan berakhir.",
-      "KABISAT menjadi ruang untuk tetap terhubung, berbagi, dan tumbuh bersama — melewati setiap fase kehidupan yang datang setelahnya.",
-    ],
-  },
-
-  stats: [
-    { id: "alumni", value: 120, suffix: "+", label: "Alumni" },
-    { id: "pengurus", value: 7, label: "Pengurus Inti" },
-    { id: "program", value: 5, label: "Program" },
-    { id: "tahun", value: 12, suffix: "+", label: "Tahun Perjalanan" },
-  ] satisfies StatItem[],
 
   closingCta: {
     lines: [
