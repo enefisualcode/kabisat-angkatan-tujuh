@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Mail } from "lucide-react";
 import Container from "@/components/ui/Container";
 import InstagramIcon from "@/components/ui/InstagramIcon";
+import YoutubeIcon from "@/components/ui/YoutubeIcon";
 import { navLinks, site } from "@/data/site";
 
 export default function Footer() {
@@ -61,6 +62,15 @@ export default function Footer() {
               aria-label="Instagram KABISAT"
             >
               <InstagramIcon size={15} />
+            </a>
+            <a
+              href={site.youtube}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="flex items-center gap-1.5 transition-colors hover:text-gold"
+              aria-label="YouTube KABISAT"
+            >
+              <YoutubeIcon size={15} />
             </a>
           </div>
         </div>

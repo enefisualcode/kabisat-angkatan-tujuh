@@ -63,9 +63,13 @@ export default function ProgramListClient({
           Belum ada program pada kategori ini.
         </p>
       ) : (
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="-mx-6 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:px-8 [&::-webkit-scrollbar]:hidden">
           {filtered.map((program, index) => (
-            <FadeIn key={program.id} delay={(index % 3) * 0.08}>
+            <FadeIn
+              key={program.id}
+              delay={(index % 3) * 0.08}
+              className="shrink-0"
+            >
               <ProgramCard program={program} />
             </FadeIn>
           ))}

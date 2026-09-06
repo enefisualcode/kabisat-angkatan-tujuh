@@ -31,9 +31,9 @@ export default function ProgramsPreview() {
           </FadeIn>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="-mx-6 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:px-8 [&::-webkit-scrollbar]:hidden">
           {featured.map((program, index) => (
-            <FadeIn key={program.id} delay={index * 0.1}>
+            <FadeIn key={program.id} delay={index * 0.1} className="shrink-0">
               <ProgramCard program={program} />
             </FadeIn>
           ))}
