@@ -16,7 +16,6 @@ export default function CommitteePreview() {
           <SectionHeading
             eyebrow="Pengurus"
             title="Kepengurusan"
-            description="Orang-orang yang menjaga KABISAT tetap bergerak."
             align="center"
             className="mx-auto"
           />
