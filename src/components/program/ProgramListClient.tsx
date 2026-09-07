@@ -63,12 +63,12 @@ export default function ProgramListClient({
           Belum ada program pada kategori ini.
         </p>
       ) : (
-        <div className="-mx-6 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:px-8 [&::-webkit-scrollbar]:hidden">
+        <div className="-mx-6 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[calc((100vw_-_18rem)_/_2)] pb-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:px-8 [&::-webkit-scrollbar]:hidden">
           {filtered.map((program, index) => (
             <FadeIn
               key={program.id}
               delay={(index % 3) * 0.08}
-              className="shrink-0"
+              className="shrink-0 snap-center sm:snap-start"
             >
               <ProgramCard program={program} />
             </FadeIn>

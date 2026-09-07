@@ -74,8 +74,8 @@ export const site = {
 
 export const navLinks = [
   { href: "/", label: "Beranda" },
-  { href: "/kepengurusan", label: "Kepengurusan" },
   { href: "/program", label: "Program" },
+  { href: "/kepengurusan", label: "Kepengurusan" },
   { href: "/dokumentasi", label: "Dokumentasi" },
   { href: "/tentang", label: "Tentang" },
 ];
