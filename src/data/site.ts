@@ -34,21 +34,19 @@ export const site = {
     heroTitle: "Tentang KABISAT",
     kami: {
       heading: "Tentang Kami",
-      body: "KABISAT Angkatan Tujuh adalah wadah bagi seluruh alumni Angkatan Tujuh untuk tetap menjaga silaturahmi, berbagi kabar, dan bergerak bersama dalam berbagai program dan kegiatan alumni.",
+      body: "KABISAT adalah nama angkatan kami, alumni Pondok Pesantren Daarul Rahman 3 asuhan KH Syukron Ma’mun yang lulus pada tahun 2018. KABISAT menjadi wadah untuk terus menjaga silaturahmi dan hubungan yang telah terjalin, meskipun kami kini menjalani kesibukan dan perjalanan masing-masing.",
     },
     awalPerjalanan: {
       heading: "Awal Perjalanan",
-      body: "Kebersamaan Angkatan Tujuh dimulai jauh sebelum KABISAT terbentuk secara resmi. Setelah bertahun-tahun terpisah jalan masing-masing, semangat untuk tetap terhubung inilah yang akhirnya menyatukan kembali langkah untuk membentuk wadah alumni yang lebih terstruktur.",
+      body: "Kisah KABISAT berawal dari kebersamaan kami selama menuntut ilmu di Pondok Pesantren Daarul Rahman 3. Setelah lulus pada 2018 dan mulai menempuh jalan masing-masing, semangat untuk tetap terhubung menyatukan kembali langkah kami dalam sebuah wadah alumni.",
     },
     filosofiNama: {
       heading: "Filosofi Nama KABISAT",
-      // TODO: lengkapi filosofi nama saat data resmi tersedia
-      body: "Filosofi nama KABISAT akan dilengkapi.",
+      body: "KABISAT adalah nama angkatan ketujuh kami. Nama ini menjadi identitas yang mengingatkan kami pada kebersamaan, nilai-nilai yang dipelajari, dan ikatan persaudaraan yang ingin terus dijaga setelah menyelesaikan pendidikan.",
     },
     filosofiLogo: {
       heading: "Filosofi Logo",
-      // TODO: lengkapi filosofi logo saat data resmi tersedia
-      body: "Filosofi logo akan dilengkapi.",
+      body: "Logo KABISAT menggambarkan identitas Angkatan Tujuh yang tumbuh dalam kebersamaan, keterbukaan, dan saling mendukung. Angka 7 menjadi simbol utama identitas angkatan, dengan bentuk yang terinspirasi dari angka tujuh dalam bahasa Arab dan dekat dengan keseharian kami. Dua helai daun melambangkan perempuan dan laki-laki yang saling melengkapi, sekaligus anggota KABISAT yang terus bertumbuh dan memberi manfaat di mana pun berada. Gestur manusia mencerminkan sikap ramah, rendah hati, terbuka terhadap semua kalangan, serta siap menerima masukan dengan penuh kegembiraan. Secara keseluruhan, logo ini merepresentasikan KABISAT sebagai angkatan yang solid, inklusif, dan terus berkembang bersama.",
     },
   },
 
