@@ -9,7 +9,7 @@ export const site = {
   description:
     "Website resmi alumni KABISAT Angkatan Tujuh. Informasi kepengurusan, program, agenda, dan dokumentasi perjalanan alumni.",
   // TODO: ganti dengan domain resmi saat sudah tersedia
-  url: "https://kabisatangkatantujuh.org",
+  url: "https://www.kabisat.site",
   email: "kabisat0739@gmail.com",
   instagram: "https://www.instagram.com/kabisat07/",
   youtube: "https://www.youtube.com/@KABISAT07daarulrahman3",

@@ -19,6 +19,7 @@ import { programs, getProgramBySlug } from "@/data/programs";
 import { getGalleryForEvent } from "@/data/gallery";
 import { cn, STAGE_LABELS, STAGE_STYLES } from "@/lib/utils";
 import { PROGRAM_ICONS } from "@/lib/program-icons";
+import { site } from "@/data/site";
 
 export function generateStaticParams() {
   return programs.map((program) => ({ slug: program.slug }));
@@ -34,9 +35,20 @@ export async function generateMetadata(
   return {
     title: program.title,
     description: program.shortDescription,
+    alternates: { canonical: `/program/${program.slug}` },
     openGraph: program.coverImage
-      ? { images: [{ url: program.coverImage }] }
-      : undefined,
+      ? {
+          title: `${program.title} | KABISAT`,
+          description: program.shortDescription,
+          url: `/program/${program.slug}`,
+          type: "article",
+          images: [{ url: program.coverImage, alt: program.title }],
+        }
+      : {
+          title: `${program.title} | KABISAT`,
+          description: program.shortDescription,
+          url: `/program/${program.slug}`,
+        },
   };
 }
 
@@ -76,9 +88,36 @@ export default async function ProgramDetailPage(
       ? program.actualDate
       : program.estimatedDate;
   const Icon = program.icon ? PROGRAM_ICONS[program.icon] : null;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: site.url },
+      { "@type": "ListItem", position: 2, name: "Program", item: `${site.url}/program` },
+      { "@type": "ListItem", position: 3, name: program.title, item: `${site.url}/program/${program.slug}` },
+    ],
+  };
+  const eventJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: program.title,
+    description: program.description,
+    url: `${site.url}/program/${program.slug}`,
+    image: program.coverImage ? `${site.url}${program.coverImage}` : `${site.url}${site.logos.symbol}`,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    organizer: { "@type": "Organization", name: site.name, url: site.url },
+    location: program.location ? { "@type": "Place", name: program.location } : undefined,
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([breadcrumbJsonLd, eventJsonLd]).replace(/</g, "\\u003c"),
+        }}
+      />
       <PageHero eyebrow="Program KABISAT" title={program.title}>
         {dateValue || program.location ? (
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-cream/75">
