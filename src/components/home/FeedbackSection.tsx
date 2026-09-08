@@ -11,14 +11,41 @@ export default function FeedbackSection() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
+    "idle"
+  );
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const subject = `Masukan dari ${name}`;
     const body = `Nama: ${name}\nEmail: ${email}\n\nMasukan:\n${message}`;
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
+
+    setStatus("sending");
+
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (response.status === 503) {
+        window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
+          subject
+        )}&body=${encodeURIComponent(body)}`;
+        setStatus("idle");
+        return;
+      }
+
+      if (!response.ok) throw new Error("Feedback submission failed");
+
+      setName("");
+      setEmail("");
+      setMessage("");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -90,11 +117,24 @@ export default function FeedbackSection() {
 
             <button
               type="submit"
-              className="flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-navy transition-transform duration-200 hover:scale-[1.02]"
+              disabled={status === "sending"}
+              className="flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-navy transition-transform duration-200 hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70"
             >
               Kirim Masukan
               <Send size={15} />
             </button>
+            <p
+              aria-live="polite"
+              className="text-sm text-navy/65"
+            >
+              {status === "sending"
+                ? "Mengirim masukan..."
+                : status === "success"
+                  ? "Terima kasih, masukan Anda sudah kami terima."
+                  : status === "error"
+                    ? "Masukan belum terkirim. Silakan coba lagi."
+                    : null}
+            </p>
           </form>
         </FadeIn>
       </Container>

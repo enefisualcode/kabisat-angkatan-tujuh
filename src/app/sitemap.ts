@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "",
     "/kepengurusan",
+    "/lowongan-kerja",
     "/program",
     "/dokumentasi",
     "/tentang",

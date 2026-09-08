@@ -76,6 +76,7 @@ export const navLinks = [
   { href: "/", label: "Beranda" },
   { href: "/program", label: "Program" },
   { href: "/kepengurusan", label: "Kepengurusan" },
+  { href: "/lowongan-kerja", label: "Lowongan Kerja" },
   { href: "/dokumentasi", label: "Dokumentasi" },
   { href: "/tentang", label: "Tentang" },
 ];

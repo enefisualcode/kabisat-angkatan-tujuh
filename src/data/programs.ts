@@ -43,10 +43,10 @@ export const programs: Program[] = [
   {
     id: "prog-4",
     slug: "kabisat-run",
-    title: "Sport KABISAT Run",
+    title: "KABISAT Sport",
     shortDescription: "Agenda lari bersama untuk menjaga kebugaran alumni.",
     description:
-      "Sport KABISAT Run adalah agenda olahraga lari bersama yang digagas untuk menjaga kebugaran sekaligus mempererat kebersamaan alumni.",
+      "KABISAT Sport adalah agenda olahraga bersama yang digagas untuk menjaga kebugaran sekaligus mempererat kebersamaan alumni.",
     status: "planned",
     stage: "coming-soon",
     icon: "footprints",
