@@ -20,8 +20,8 @@ export const site = {
   },
 
   heroImage: "/images/hero/alumni-group.jpeg",
-  // Gunakan logo resmi agar preview tautan tidak menampilkan gambar placeholder.
-  ogImage: "/logos/kabisat-full.png",
+  // Preview tautan memakai kartu biru dengan logo resmi KABISAT.
+  ogImage: "/og-image.png",
 
   closingCta: {
     lines: [
