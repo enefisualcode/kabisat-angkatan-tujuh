@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/layout/PageHero";
 import Container from "@/components/ui/Container";
 import FadeIn from "@/components/ui/FadeIn";
@@ -37,6 +38,24 @@ export default function TentangPage() {
                 <p className="mt-4 text-base leading-relaxed text-navy/70 sm:text-lg">
                   {section.body}
                 </p>
+                {section.heading === "Filosofi Logo" ? (
+                  <div className="mt-8 space-y-5">
+                    <Image
+                      src="/images/about/filosofi-logo-1.jpg"
+                      alt="Penjelasan unsur-unsur logo KABISAT"
+                      width={1119}
+                      height={647}
+                      className="h-auto w-full rounded-card border border-navy/10"
+                    />
+                    <Image
+                      src="/images/about/filosofi-logo-2.jpg"
+                      alt="Makna keseluruhan logo KABISAT"
+                      width={1167}
+                      height={647}
+                      className="h-auto w-full rounded-card border border-navy/10"
+                    />
+                  </div>
+                ) : null}
               </FadeIn>
             ))}
           </div>
