@@ -34,6 +34,14 @@ export const gallery: GalleryItem[] = [
     image: "/gallery/maulid-akbar.jpg",
     featured: true,
   },
+  ...Array.from({ length: 8 }, (_, index) => ({
+    id: `ngobarji-feb-2025-${index + 1}`,
+    title: `Ngobarji Februari 2025 — Foto ${index + 1}`,
+    event: "Ngobarji",
+    year: 2025,
+    image: `/gallery/ngobarji-feb-2025 (${index + 1}).jpg`,
+    ...(index === 0 ? { featured: true } : {}),
+  })),
   {
     id: "g-5",
     title: "Gathering KABISAT Cinere",
