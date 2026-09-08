@@ -39,7 +39,7 @@ export function statusLabel(status: ProgramStatus) {
 
 export const STAGE_LABELS: Record<ProgramStage, string> = {
   "coming-soon": "Coming Soon",
-  "on-going": "On Going",
+  "on-going": "On Progress",
   done: "Done",
 };
 
