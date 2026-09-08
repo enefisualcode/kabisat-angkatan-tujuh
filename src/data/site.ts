@@ -47,6 +47,12 @@ export const site = {
     filosofiLogo: {
       heading: "Filosofi Logo",
       body: "Logo KABISAT menggambarkan identitas Angkatan Tujuh yang tumbuh dalam kebersamaan, keterbukaan, dan saling mendukung. Angka 7 menjadi simbol utama identitas angkatan, dengan bentuk yang terinspirasi dari angka tujuh dalam bahasa Arab dan dekat dengan keseharian kami. Dua helai daun melambangkan perempuan dan laki-laki yang saling melengkapi, sekaligus anggota KABISAT yang terus bertumbuh dan memberi manfaat di mana pun berada. Gestur manusia mencerminkan sikap ramah, rendah hati, terbuka terhadap semua kalangan, serta siap menerima masukan dengan penuh kegembiraan. Secara keseluruhan, logo ini merepresentasikan KABISAT sebagai angkatan yang solid, inklusif, dan terus berkembang bersama.",
+      paragraphs: [
+        "Logo KABISAT menggambarkan identitas Angkatan Tujuh yang tumbuh dalam kebersamaan, keterbukaan, dan saling mendukung.",
+        "Angka 7 menjadi simbol utama identitas angkatan. Bentuknya terinspirasi dari penulisan angka tujuh dalam bahasa Arab, yang dekat dengan keseharian kami dan menjadi bagian dari karakter angkatan.",
+        "Dua helai daun melambangkan perempuan dan laki-laki yang saling melengkapi. Daun juga menjadi simbol anggota KABISAT yang terus bertumbuh, beradaptasi, dan memberi manfaat di mana pun berada.",
+        "Gestur manusia mencerminkan sikap ramah, rendah hati, terbuka terhadap semua kalangan, serta siap menerima masukan dengan penuh kegembiraan. Secara keseluruhan, logo ini merepresentasikan KABISAT sebagai angkatan yang solid, inklusif, dan terus berkembang bersama.",
+      ],
     },
   },
 

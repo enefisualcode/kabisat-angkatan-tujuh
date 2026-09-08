@@ -11,7 +11,11 @@ export const metadata: Metadata = {
     "Kisah, filosofi, dan nilai-nilai yang menjadi dasar berdirinya KABISAT Angkatan Tujuh.",
 };
 
-const sections = [
+const sections: Array<{
+  heading: string;
+  body: string;
+  paragraphs?: string[];
+}> = [
   site.about.kami,
   site.about.awalPerjalanan,
   site.about.filosofiNama,
@@ -35,27 +39,26 @@ export default function TentangPage() {
                 <h2 className="font-heading text-2xl font-bold text-navy sm:text-3xl">
                   {section.heading}
                 </h2>
-                <p className="mt-4 text-base leading-relaxed text-navy/70 sm:text-lg">
-                  {section.body}
-                </p>
                 {section.heading === "Filosofi Logo" ? (
-                  <div className="mt-8 space-y-5">
+                  <div className="mt-8 grid gap-8 sm:grid-cols-[minmax(180px,0.7fr)_minmax(0,1.5fr)] sm:items-start sm:gap-12">
                     <Image
-                      src="/images/about/filosofi-logo-1.jpg"
-                      alt="Penjelasan unsur-unsur logo KABISAT"
-                      width={1119}
-                      height={647}
-                      className="h-auto w-full rounded-card border border-navy/10"
+                      src="/logos/kabisat-symbol.png"
+                      alt="Logo KABISAT"
+                      width={360}
+                      height={360}
+                      className="mx-auto h-44 w-44 object-contain sm:sticky sm:top-28 sm:mx-0 sm:h-56 sm:w-56"
                     />
-                    <Image
-                      src="/images/about/filosofi-logo-2.jpg"
-                      alt="Makna keseluruhan logo KABISAT"
-                      width={1167}
-                      height={647}
-                      className="h-auto w-full rounded-card border border-navy/10"
-                    />
+                    <div className="space-y-5 text-base leading-relaxed text-navy/70 sm:text-lg">
+                      {(section.paragraphs ?? [section.body]).map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                    </div>
                   </div>
-                ) : null}
+                ) : (
+                  <p className="mt-4 text-base leading-relaxed text-navy/70 sm:text-lg">
+                    {section.body}
+                  </p>
+                )}
               </FadeIn>
             ))}
           </div>
