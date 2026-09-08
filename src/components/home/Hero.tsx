@@ -19,7 +19,7 @@ export default function Hero() {
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 sm:px-8 sm:pb-28">
         <p className="mb-4 text-xs font-semibold tracking-[0.3em] text-gold-soft uppercase sm:text-sm">
-          Angkatan Tujuh
+          Alumni Daarul Rahman 3 Angkatan 7
         </p>
         <h1 className="font-heading text-6xl leading-[0.95] font-extrabold text-cream sm:text-8xl lg:text-[9rem]">
           KABISAT
