@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/kepengurusan",
     "/lowongan-kerja",
+    "/kitab-irsyadud",
     "/program",
     "/dokumentasi",
     "/tentang",
