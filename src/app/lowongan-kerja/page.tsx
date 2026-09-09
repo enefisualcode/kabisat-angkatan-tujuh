@@ -33,18 +33,6 @@ export default function LowonganKerjaPage() {
               alumni dan jaringan KABISAT. Kirimkan informasi yang relevan agar
               dapat membantu alumni lain menemukan kesempatan berikutnya.
             </p>
-            <div className="mt-10 grid gap-6 text-left sm:grid-cols-3">
-              {["Teknologi & Kreatif", "Bisnis & Profesional", "Pendidikan & Sosial"].map(
-                (category) => (
-                  <div key={category} className="rounded-xl border border-navy/10 bg-cream/50 p-5">
-                    <h3 className="font-heading font-bold text-navy">{category}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-navy/60">
-                      Peluang kerja, proyek, dan kolaborasi dari jaringan alumni.
-                    </p>
-                  </div>
-                )
-              )}
-            </div>
             <div className="mt-10 border-t border-navy/10 pt-8 text-left">
               <h3 className="font-heading text-lg font-bold text-navy">Cara mengirim informasi lowongan</h3>
               <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-navy/65">

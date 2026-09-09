@@ -12,18 +12,18 @@ export const metadata: Metadata = {
 
 const books = [
   {
-    title: "Intabah Dinuka Fil Khatar",
-    arabicTitle: "انتبه دينك فى الخطر",
-    description: "Kitab pengingat untuk menjaga agama dan kehidupan.",
-    href: "/kitab-dan-irsyadud/kitab-intabah-dinuka-fil-khatar.pdf",
-    size: "5,4 MB",
-  },
-  {
     title: "Irsyadud Thalabah",
     arabicTitle: "إِرْشَادُ الطَّلَبَةِ",
     description: "Bacaan dan panduan untuk para penuntut ilmu.",
     href: "/kitab-dan-irsyadud/irsyadud-thalabah.pdf",
     size: "1,9 MB",
+  },
+  {
+    title: "Intabah Dinuka Fil Khatar",
+    arabicTitle: "انتبه دينك فى الخطر",
+    description: "Kitab pengingat untuk menjaga agama dan kehidupan.",
+    href: "/kitab-dan-irsyadud/kitab-intabah-dinuka-fil-khatar.pdf",
+    size: "5,4 MB",
   },
 ];
 
