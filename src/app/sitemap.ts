@@ -2,25 +2,27 @@ import type { MetadataRoute } from "next";
 import { site } from "@/data/site";
 import { programs } from "@/data/programs";
 
+const publicRoutes = [
+  { path: "/", priority: 1 },
+  { path: "/program", priority: 0.8 },
+  { path: "/kepengurusan", priority: 0.8 },
+  { path: "/lowongan-kerja", priority: 0.8 },
+  { path: "/kitab-irsyadud", priority: 0.8 },
+  { path: "/dokumentasi", priority: 0.8 },
+  { path: "/tentang", priority: 0.8 },
+] as const;
+
+const absoluteUrl = (path: string) => new URL(path, site.url).toString();
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = [
-    "",
-    "/kepengurusan",
-    "/lowongan-kerja",
-    "/kitab-irsyadud",
-    "/program",
-    "/dokumentasi",
-    "/tentang",
-  ].map((path) => ({
-    url: `${site.url}${path}`,
-    lastModified: new Date(),
+  const staticRoutes = publicRoutes.map(({ path, priority }) => ({
+    url: absoluteUrl(path),
     changeFrequency: "monthly" as const,
-    priority: path === "" ? 1 : 0.8,
+    priority,
   }));
 
   const programRoutes = programs.map((program) => ({
-    url: `${site.url}/program/${program.slug}`,
-    lastModified: new Date(),
+    url: absoluteUrl(`/program/${program.slug}`),
     changeFrequency: "weekly" as const,
     priority: 0.6,
   }));
