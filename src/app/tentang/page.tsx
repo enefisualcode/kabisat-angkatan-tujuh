@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import PageHero from "@/components/layout/PageHero";
 import Container from "@/components/ui/Container";
 import FadeIn from "@/components/ui/FadeIn";
 import { site } from "@/data/site";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Tentang KABISAT",
   description:
     "Kisah, filosofi, dan nilai-nilai yang menjadi dasar berdirinya KABISAT Angkatan Tujuh.",
-};
+  path: "/tentang",
+});
 
 const sections: Array<{
   heading: string;

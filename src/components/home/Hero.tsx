@@ -23,6 +23,9 @@ export default function Hero() {
         </p>
         <h1 className="font-heading text-6xl leading-[0.95] font-extrabold text-cream sm:text-8xl lg:text-[9rem]">
           KABISAT
+          <span className="sr-only">
+            {" "}Angkatan Tujuh — Komunitas Alumni Daarul Rahman 3
+          </span>
         </h1>
         <p className="font-heading mt-1 text-2xl font-semibold tracking-wide text-cream/90 sm:text-4xl">
           Angkatan Tujuh

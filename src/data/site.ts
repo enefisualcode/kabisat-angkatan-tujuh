@@ -5,7 +5,7 @@ export const site = {
   fullName: "Keluarga Alumni Angkatan Tujuh",
   tagline: "Menjaga Silaturahmi, Melanjutkan Perjalanan.",
   heroSubtext:
-    "Wadah kebersamaan, silaturahmi, dan perjalanan alumni Angkatan Tujuh.",
+    "Wadah kebersamaan, silaturahmi, dan perjalanan KABISAT Angkatan Tujuh, komunitas alumni Pondok Pesantren Daarul Rahman 3.",
   description:
     "Website resmi alumni KABISAT Angkatan Tujuh. Informasi kepengurusan, program, agenda, dan dokumentasi perjalanan alumni.",
   // TODO: ganti dengan domain resmi saat sudah tersedia

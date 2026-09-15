@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import PageHero from "@/components/layout/PageHero";
 import Container from "@/components/ui/Container";
 import DokumentasiClient from "@/components/gallery/DokumentasiClient";
 import { getGalleryByEvent } from "@/data/gallery";
 import { site } from "@/data/site";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Dokumentasi",
   description:
     "Galeri dokumentasi kegiatan KABISAT Angkatan Tujuh dari waktu ke waktu.",
-};
+  path: "/dokumentasi",
+});
 
 export default function DokumentasiPage() {
   const groups = getGalleryByEvent();

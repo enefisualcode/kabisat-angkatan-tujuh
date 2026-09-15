@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import { BriefcaseBusiness } from "lucide-react";
 import Link from "next/link";
 import PageHero from "@/components/layout/PageHero";
 import Container from "@/components/ui/Container";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Lowongan Kerja",
   description:
     "Informasi peluang kerja dan karier yang dibagikan untuk alumni KABISAT Angkatan Tujuh.",
-};
+  path: "/lowongan-kerja",
+});
 
 export default function LowonganKerjaPage() {
   return (

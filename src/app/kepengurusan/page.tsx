@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import PageHero from "@/components/layout/PageHero";
 import Container from "@/components/ui/Container";
 import FadeIn from "@/components/ui/FadeIn";
 import MemberCard from "@/components/member/MemberCard";
 import { members, DIVISION_ORDER, getMembersByDivision } from "@/data/members";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Kepengurusan",
   description:
     "Struktur kepengurusan KABISAT Angkatan Tujuh — pengurus inti dan seluruh divisi yang menjalankan program alumni.",
-};
+  path: "/kepengurusan",
+});
 
 export default function KepengurusanPage() {
   const ketua = members.filter((m) => m.role === "Ketua");

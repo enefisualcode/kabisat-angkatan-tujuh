@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
 import { Download, FileText } from "lucide-react";
 import PageHero from "@/components/layout/PageHero";
 import Container from "@/components/ui/Container";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Kitab & Irsyadud",
   description:
     "Unduh kitab pilihan dan Irsyadud Thalabah untuk keluarga alumni KABISAT Angkatan Tujuh.",
-  alternates: { canonical: "/kitab-irsyadud" },
-};
+  path: "/kitab-irsyadud",
+});
 
 const books = [
   {

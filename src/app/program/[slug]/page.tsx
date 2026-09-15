@@ -25,6 +25,13 @@ export function generateStaticParams() {
   return programs.map((program) => ({ slug: program.slug }));
 }
 
+function isValidIsoDate(date?: string): date is string {
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return false;
+
+  const parsed = new Date(`${date}T00:00:00.000Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().startsWith(date);
+}
+
 export async function generateMetadata(
   props: PageProps<"/program/[slug]">
 ): Promise<Metadata> {
@@ -32,23 +39,26 @@ export async function generateMetadata(
   const program = getProgramBySlug(slug);
   if (!program) return {};
 
+  const socialTitle = `${program.title} | ${site.name}`;
+  const socialImage = program.coverImage ?? site.ogImage;
+
   return {
     title: program.title,
     description: program.shortDescription,
     alternates: { canonical: `/program/${program.slug}` },
-    openGraph: program.coverImage
-      ? {
-          title: `${program.title} | KABISAT`,
-          description: program.shortDescription,
-          url: `/program/${program.slug}`,
-          type: "article",
-          images: [{ url: program.coverImage, alt: program.title }],
-        }
-      : {
-          title: `${program.title} | KABISAT`,
-          description: program.shortDescription,
-          url: `/program/${program.slug}`,
-        },
+    openGraph: {
+      title: socialTitle,
+      description: program.shortDescription,
+      url: `/program/${program.slug}`,
+      type: "article",
+      images: [{ url: socialImage, alt: program.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: socialTitle,
+      description: program.shortDescription,
+      images: [socialImage],
+    },
   };
 }
 
@@ -87,6 +97,7 @@ export default async function ProgramDetailPage(
     isCompleted && program.actualDate
       ? program.actualDate
       : program.estimatedDate;
+  const eventStartDate = program.actualDate ?? program.estimatedDate;
   const Icon = program.icon ? PROGRAM_ICONS[program.icon] : null;
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -97,25 +108,34 @@ export default async function ProgramDetailPage(
       { "@type": "ListItem", position: 3, name: program.title, item: `${site.url}/program/${program.slug}` },
     ],
   };
-  const eventJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: program.title,
-    description: program.description,
-    url: `${site.url}/program/${program.slug}`,
-    image: program.coverImage ? `${site.url}${program.coverImage}` : `${site.url}${site.logos.symbol}`,
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    organizer: { "@type": "Organization", name: site.name, url: site.url },
-    location: program.location ? { "@type": "Place", name: program.location } : undefined,
-  };
+  const eventJsonLd = isValidIsoDate(eventStartDate)
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        name: program.title,
+        description: program.description,
+        url: `${site.url}/program/${program.slug}`,
+        image: program.coverImage
+          ? `${site.url}${program.coverImage}`
+          : `${site.url}${site.logos.symbol}`,
+        startDate: eventStartDate,
+        eventStatus: "https://schema.org/EventScheduled",
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        organizer: { "@type": "Organization", name: site.name, url: site.url },
+        location: program.location
+          ? { "@type": "Place", name: program.location }
+          : undefined,
+      }
+    : null;
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify([breadcrumbJsonLd, eventJsonLd]).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(
+            eventJsonLd ? [breadcrumbJsonLd, eventJsonLd] : [breadcrumbJsonLd]
+          ).replace(/</g, "\\u003c"),
         }}
       />
       <PageHero eyebrow="Program KABISAT" title={program.title}>

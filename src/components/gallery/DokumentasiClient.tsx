@@ -46,22 +46,17 @@ export default function DokumentasiClient({
     <div>
       {yearGroups.map((year) => (
         <div key={year} className="mb-16 last:mb-0">
-          <p className="font-heading mb-7 text-3xl font-extrabold text-navy sm:text-4xl">
+          <h2 className="font-heading mb-7 text-3xl font-extrabold text-navy sm:text-4xl">
             {year}
-          </p>
+          </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {groups
               .map((group, index) => ({ group, index }))
               .filter(({ group }) => group.year === year)
               .map(({ group, index }) => (
-                <button
+                <div
                   key={group.event}
-                  type="button"
-                  onClick={() => {
-                    setOpenGroupIndex(index);
-                    setPhotoIndex(0);
-                  }}
-                  className="group relative aspect-[4/3] overflow-hidden rounded-card text-left"
+                  className="group relative aspect-[4/3] overflow-hidden rounded-card"
                 >
                   <Image
                     src={group.items[0].image}
@@ -72,15 +67,24 @@ export default function DokumentasiClient({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/85 via-navy/10 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-5">
-                    <p className="font-heading text-xl font-bold text-cream">
+                    <h3 className="font-heading text-xl font-bold text-cream">
                       {group.event}
-                    </p>
+                    </h3>
                     <p className="mt-1 flex items-center gap-1.5 text-sm text-cream/75">
                       <ImagesIcon size={13} />
                       {group.items.length} Foto
                     </p>
                   </div>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpenGroupIndex(index);
+                      setPhotoIndex(0);
+                    }}
+                    aria-label={`Buka galeri ${group.event}`}
+                    className="absolute inset-0 z-10 rounded-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                  />
+                </div>
               ))}
           </div>
         </div>
