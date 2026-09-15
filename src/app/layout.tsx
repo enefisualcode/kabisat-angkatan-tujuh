@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Manrope, Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -103,6 +104,7 @@ export default function RootLayout({
           <Footer />
         </MotionProvider>
       </body>
+      <GoogleAnalytics gaId="G-HVDT0QZPB0" />
     </html>
   );
 }
