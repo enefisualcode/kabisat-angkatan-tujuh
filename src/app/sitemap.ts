@@ -6,7 +6,7 @@ const publicRoutes = [
   { path: "/", priority: 1 },
   { path: "/program", priority: 0.8 },
   { path: "/kepengurusan", priority: 0.8 },
-  { path: "/lowongan-kerja", priority: 0.8 },
+  { path: "/karier-usaha", priority: 0.8 },
   { path: "/kitab-irsyadud", priority: 0.8 },
   { path: "/dokumentasi", priority: 0.8 },
   { path: "/tentang", priority: 0.8 },
