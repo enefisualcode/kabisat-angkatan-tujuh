@@ -44,6 +44,12 @@ Buka `/admin/karier-usaha`, login memakai password dari environment lokal/Vercel
 
 Daftar pending dipaginasi 25 item dan menyediakan preview data/gambar. Publish mengubah hanya row yang masih pending menjadi `published`, dengan `published_at=now()` melalui trigger. Reject mengubahnya menjadi `rejected` dan mengosongkan timestamp publikasi. Mutasi bersamaan tidak dapat menimpa hasil moderasi sebelumnya. Halaman publik direvalidasi setelah perubahan.
 
+Admin juga dapat memilih tab Pending, Published, atau Rejected. Tombol **Hapus** pada setiap posting meminta konfirmasi sebelum memanggil server action yang memverifikasi sesi admin. Path gambar diambil dari database, bukan dari input client. File di `opportunity-images` dihapus lebih dahulu, kemudian row dihapus; tidak memerlukan migration atau policy publik tambahan.
+
+Jika Storage gagal atau responsnya tidak pasti, row tidak dihapus dan admin mendapat pesan untuk mencoba lagi. Jika file sudah dihapus tetapi penghapusan row gagal, server mencoba mengosongkan referensi gambar lama agar row tidak menunjuk file yang hilang. Pembaruan ini bersyarat pada path lama, sehingga tidak menimpa gambar yang berubah bersamaan. Jika perbaikan database ikut gagal, pesan kegagalan parsial ditampilkan dan ID posting dicatat di log untuk retry. Kedua layanan tidak memiliki transaksi bersama; kegagalan proses mendadak tetap memerlukan pengulangan Hapus. File yang sudah tidak ada dapat dilewati saat retry. Success hanya ditampilkan setelah row berhasil dihapus atau dikonfirmasi sudah tidak ada. Halaman list/detail/admin direvalidasi.
+
+Tes penghapusan: `node --test tests/opportunity-deletion.test.mjs` menguji urutan operasi dan kegagalan Storage/database/perbaikan. Dengan aplikasi lokal pada port 3100, jalankan `node --env-file=.env.local tests/opportunity-delete-live.mjs` untuk menguji penghapusan dengan sesi admin, penolakan tanpa sesi, file nyata/tanpa gambar/file yang sudah hilang, ketiga status posting, dan pengulangan penghapusan. Password admin aplikasi dan test harus sama serta minimal 32 karakter. Script membersihkan hanya fixture run tersebut.
+
 Logout menghapus cookie browser. Rotasi `OPPORTUNITY_ADMIN_PASSWORD` mencabut seluruh sesi, termasuk salinan cookie yang belum kedaluwarsa. Ini admin bersama untuk MVP, belum mencakup akun individual, MFA, atau audit actor per pengurus. Tanpa environment valid, login/mutasi ditutup; tidak ada bypass admin.
 
 ## Verifikasi yang telah dijalankan

@@ -1,6 +1,12 @@
 export type OpportunityType = "job" | "business";
 export type OpportunityStatus = "pending" | "published" | "rejected";
 
+export interface OpportunityImage {
+  id: string;
+  url: string;
+  sortOrder: number;
+}
+
 export type EmploymentType =
   | "Full Time"
   | "Part Time"
@@ -16,6 +22,7 @@ export interface OpportunityBase {
   location: string;
   whatsapp: string;
   image: string;
+  images: OpportunityImage[];
   publishedAt: string;
 }
 

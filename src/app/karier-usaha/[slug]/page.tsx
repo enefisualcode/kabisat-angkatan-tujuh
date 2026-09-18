@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OpportunityGallery from "@/components/career-business/OpportunityGallery";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, MapPin, MessageCircle } from "lucide-react";
@@ -24,7 +24,7 @@ export default async function OpportunityDetailPage({ params }: { params: Promis
   if (!opportunity) notFound();
   const whatsappUrl = "https://wa.me/" + opportunity.whatsapp.replaceAll(" ", "");
   const dateFormatter = new Intl.DateTimeFormat("id-ID", { dateStyle: "long" });
-  return <><PageHero eyebrow={opportunity.type === "job" ? "Lowongan Kerja" : "Usaha Alumni"} title={opportunity.type === "job" ? opportunity.title : opportunity.businessName} description={opportunity.type === "job" ? opportunity.company : opportunity.category} /><section className="py-16 sm:py-20"><Container className="max-w-4xl"><Link href="/karier-usaha" className="inline-flex items-center gap-2 text-sm font-semibold text-navy/65 hover:text-navy focus-visible:outline-2 focus-visible:outline-gold"><ArrowLeft size={16} />Kembali ke Karier & Usaha</Link><article className="mt-8 overflow-hidden rounded-card border border-navy/10 bg-white shadow-sm"><div className="relative h-56 bg-navy/5 sm:h-72"><Image unoptimized src={opportunity.image} alt={opportunity.type === "job" ? "Poster " + opportunity.title : "Foto " + opportunity.businessName} fill className="object-cover" /></div><div className="p-6 sm:p-10">{opportunity.type === "job" ? <JobDetails opportunity={opportunity} dateFormatter={dateFormatter} whatsappUrl={whatsappUrl} /> : <BusinessDetails opportunity={opportunity} whatsappUrl={whatsappUrl} />}</div></article></Container></section></>;
+  return <><PageHero eyebrow={opportunity.type === "job" ? "Lowongan Kerja" : "Usaha Alumni"} title={opportunity.type === "job" ? opportunity.title : opportunity.businessName} description={opportunity.type === "job" ? opportunity.company : opportunity.category} /><section className="py-16 sm:py-20"><Container className="max-w-4xl"><Link href="/karier-usaha" className="inline-flex items-center gap-2 text-sm font-semibold text-navy/65 hover:text-navy focus-visible:outline-2 focus-visible:outline-gold"><ArrowLeft size={16} />Kembali ke Karier & Usaha</Link><article className="mt-8 overflow-hidden rounded-card border border-navy/10 bg-white shadow-sm"><OpportunityGallery images={opportunity.images} title={opportunity.type === "job" ? opportunity.title : opportunity.businessName} /><div className="p-6 sm:p-10">{opportunity.type === "job" ? <JobDetails opportunity={opportunity} dateFormatter={dateFormatter} whatsappUrl={whatsappUrl} /> : <BusinessDetails opportunity={opportunity} whatsappUrl={whatsappUrl} />}</div></article></Container></section></>;
 }
 
 function JobDetails({ opportunity, dateFormatter, whatsappUrl }: { opportunity: JobOpportunity; dateFormatter: Intl.DateTimeFormat; whatsappUrl: string }) {

@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
+import { submitForm } from './opportunity-test-client.mjs';
 
 const origin = 'http://localhost:3100';
 const key = process.env.SUPABASE_SECRET_KEY;
@@ -17,7 +18,7 @@ function form(type) {
   data.set('image', new File([png], 'fixture.png', {type:'image/png'}));
   return data;
 }
-async function submit(data) { return fetch(`${origin}/api/opportunities`, {method:'POST', headers:{Origin:origin}, body:data}); }
+async function submit(data) { return submitForm(data); }
 function actionId(html) {
   const match = html.match(/name="(\$ACTION_ID_[^"]+)"/);
   assert.ok(match, 'Server action form exists'); return match[1];

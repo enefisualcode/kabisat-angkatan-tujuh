@@ -2,8 +2,18 @@ import type { OpportunityInsert } from "../types/database";
 import type { EmploymentType } from "../types/opportunity";
 
 export const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
+export const MAX_IMAGES = 5;
 export const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 export const EMPLOYMENT_TYPES: EmploymentType[] = ["Full Time", "Part Time", "Internship", "Freelance"];
+
+export function validateImageTypes(types: unknown): asserts types is string[] {
+  if (!Array.isArray(types) || types.length > MAX_IMAGES) throw new Error("Maksimal 5 foto per posting.");
+  if (types.some(type => typeof type !== "string" || !IMAGE_TYPES.includes(type))) throw new Error("Gambar harus JPEG, PNG, atau WebP.");
+}
+export async function validateImages(files: File[]) {
+  validateImageTypes(files.map(file => file.type));
+  for (const file of files) await validateImageContent(file);
+}
 
 export function validateImage(file: File) {
   if (!IMAGE_TYPES.includes(file.type)) throw new Error("Gambar harus JPEG, PNG, atau WebP.");
