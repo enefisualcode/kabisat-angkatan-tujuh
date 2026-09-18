@@ -9,7 +9,7 @@ export default function JobCard({ job }: { job: JobOpportunity }) {
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-card border border-navy/10 bg-white shadow-sm transition-shadow hover:shadow-md">
       <div className="relative h-40 bg-navy/5">
-        <Image src={job.image} alt={"Poster " + job.title} fill className="object-cover" />
+        <Image unoptimized src={job.image} alt={"Poster " + job.title} fill className="object-cover" />
         <span className="absolute top-3 left-3 rounded-full bg-gold px-3 py-1 text-xs font-bold text-navy">Lowongan Kerja</span>
       </div>
       <div className="flex flex-1 flex-col p-5">

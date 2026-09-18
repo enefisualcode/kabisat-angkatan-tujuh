@@ -1,6 +1,9 @@
 import PageHero from "@/components/layout/PageHero";
 import CareerBusinessExplorer from "@/components/career-business/CareerBusinessExplorer";
 import { createPageMetadata } from "@/lib/metadata";
+import { getPublishedOpportunities } from "@/lib/opportunities";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = createPageMetadata({
   title: "Karier & Usaha Alumni",
@@ -8,6 +11,7 @@ export const metadata = createPageMetadata({
   path: "/karier-usaha",
 });
 
-export default function KarierUsahaPage() {
-  return <><PageHero eyebrow="Jejaring Alumni" title="Karier & Usaha" description="Temukan peluang kerja, bagikan kesempatan, dan dukung usaha sesama alumni KABISAT Angkatan Tujuh." /><CareerBusinessExplorer /></>;
+export default async function KarierUsahaPage() {
+  const opportunities = await getPublishedOpportunities();
+  return <><PageHero eyebrow="Jejaring Alumni" title="Karier & Usaha" description="Temukan peluang kerja, bagikan kesempatan, dan dukung usaha sesama alumni KABISAT Angkatan Tujuh." /><CareerBusinessExplorer opportunities={opportunities} /></>;
 }

@@ -3,30 +3,25 @@
 import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import Container from "@/components/ui/Container";
-import { mockBusinesses, mockJobs } from "@/data/opportunities";
-import type { EmploymentType } from "@/types/opportunity";
+import type { EmploymentType, Opportunity } from "@/types/opportunity";
 import BusinessCard from "./BusinessCard";
 import CategoryTabs, { type ExplorerTab } from "./CategoryTabs";
 import JobCard from "./JobCard";
 import SearchFilters from "./SearchFilters";
 import SubmissionModal from "./SubmissionModal";
+import { filterJobs, filterBusinesses } from "@/lib/opportunity-filters";
 
-export default function CareerBusinessExplorer() {
+export default function CareerBusinessExplorer({ opportunities }: { opportunities: Opportunity[] }) {
+  const jobs = opportunities.filter(item => item.type === "job");
+  const businesses = opportunities.filter(item => item.type === "business");
   const [activeTab, setActiveTab] = useState<ExplorerTab>("job");
   const [search, setSearch] = useState("");
   const [employmentType, setEmploymentType] = useState<"Semua" | EmploymentType>("Semua");
   const [category, setCategory] = useState("Semua");
   const [modalOpen, setModalOpen] = useState(false);
-  const categories = useMemo(() => [...new Set(mockBusinesses.map((business) => business.category))], []);
-  const normalizedSearch = search.trim().toLowerCase();
-  const filteredJobs = mockJobs.filter((job) => {
-    const matchesSearch = [job.title, job.company, job.location].some((value) => value.toLowerCase().includes(normalizedSearch));
-    return matchesSearch && (employmentType === "Semua" || job.employmentType === employmentType);
-  });
-  const filteredBusinesses = mockBusinesses.filter((business) => {
-    const matchesSearch = [business.businessName, business.category, business.location, business.ownerName].some((value) => value.toLowerCase().includes(normalizedSearch));
-    return matchesSearch && (category === "Semua" || business.category === category);
-  });
+  const categories = useMemo(() => [...new Set(opportunities.filter(item => item.type === "business").map(business => business.category))], [opportunities]);
+  const filteredJobs = filterJobs(jobs, search, employmentType);
+  const filteredBusinesses = filterBusinesses(businesses, search, category);
 
   return <>
     <section className="py-16 sm:py-20"><Container>
@@ -34,7 +29,7 @@ export default function CareerBusinessExplorer() {
       <div className="mt-8 flex justify-center"><CategoryTabs activeTab={activeTab} onChange={(tab) => { setActiveTab(tab); setSearch(""); }} /></div>
       <div className="mt-8"><SearchFilters search={search} onSearchChange={setSearch} activeTab={activeTab} employmentType={employmentType} onEmploymentTypeChange={setEmploymentType} category={category} categories={categories} onCategoryChange={setCategory} /></div>
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{activeTab === "job" ? filteredJobs.map((job) => <JobCard key={job.id} job={job} />) : filteredBusinesses.map((business) => <BusinessCard key={business.id} business={business} />)}</div>
-      {((activeTab === "job" && filteredJobs.length === 0) || (activeTab === "business" && filteredBusinesses.length === 0)) ? <div className="mt-10 rounded-2xl border border-dashed border-navy/20 bg-white p-8 text-center text-sm text-navy/65">Belum ada hasil yang sesuai dengan pencarian atau filter ini.</div> : null}
+      {((activeTab === "job" && filteredJobs.length === 0) || (activeTab === "business" && filteredBusinesses.length === 0)) ? <div className="mt-10 rounded-2xl border border-dashed border-navy/20 bg-white p-8 text-center text-sm text-navy/65">{opportunities.length === 0 ? "Belum ada peluang yang dipublikasikan. Jadilah yang pertama berbagi lowongan atau usaha alumni melalui tombol Bagikan Informasi." : "Belum ada hasil yang sesuai dengan pencarian atau filter ini."}</div> : null}
     </Container></section>
     <SubmissionModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
   </>;
