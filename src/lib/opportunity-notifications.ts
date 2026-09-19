@@ -5,6 +5,7 @@ import type { OpportunityRow } from "@/types/database";
 
 const RECIPIENTS = ["kabisatangkatan7@gmail.com", "nandanabil021@gmail.com"];
 const ADMIN_URL = "https://www.kabisat.site/admin/karier-usaha";
+const LOGO_URL = "https://www.kabisat.site/logos/kabisat-full.png";
 
 function escapeHtml(value: string | null | undefined) {
   return (value || "-").replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]!);
@@ -22,9 +23,65 @@ function emailContent(opportunity: OpportunityRow) {
     ["Waktu submission", new Intl.DateTimeFormat("id-ID", { dateStyle: "long", timeStyle: "short", timeZone: "Asia/Jakarta" }).format(new Date(opportunity.created_at))],
     ["Status", "Pending"],
   ];
+  const detailRows = fields.map(([label, value]) => `<tr><td style="padding:10px 16px 10px 0;border-bottom:1px solid #e6ebf0;color:#526276;font-size:14px;line-height:20px;vertical-align:top;width:38%;">${escapeHtml(label)}</td><td style="padding:10px 0;border-bottom:1px solid #e6ebf0;color:#122c46;font-size:14px;line-height:20px;vertical-align:top;font-weight:600;">${escapeHtml(value)}</td></tr>`).join("");
   return {
     subject: `[KABISAT] ${heading}`,
-    html: `<h2>${heading}</h2><table>${fields.map(([label, value]) => `<tr><td style="padding:4px 12px 4px 0;font-weight:600">${escapeHtml(label)}</td><td style="padding:4px 0">${escapeHtml(value)}</td></tr>`).join("")}</table><p><a href="${ADMIN_URL}">Buka moderasi Karier &amp; Usaha</a></p>`,
+    html: `<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeHtml(heading)}</title>
+  </head>
+  <body style="margin:0;padding:0;background-color:#f3f6f8;color:#122c46;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${escapeHtml(heading)} — buka moderasi Karier &amp; Usaha KABISAT.</div>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;background-color:#f3f6f8;">
+      <tr>
+        <td align="center" style="padding:24px 12px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:640px;background-color:#ffffff;border:1px solid #e6ebf0;border-radius:16px;overflow:hidden;">
+            <tr>
+              <td align="center" style="padding:28px 24px;background-color:#112c48;">
+                <img src="${LOGO_URL}" width="240" alt="KABISAT" style="display:block;width:240px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none;">
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:32px 28px 12px;">
+                <p style="margin:0 0 8px;color:#8a6427;font-size:12px;line-height:18px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Karier &amp; Usaha KABISAT</p>
+                <h1 style="margin:0;color:#122c46;font-size:26px;line-height:34px;font-weight:700;">${escapeHtml(heading)}</h1>
+                <p style="margin:12px 0 0;color:#526276;font-size:15px;line-height:24px;">Satu submission baru menunggu pemeriksaan pengurus.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:8px 28px 20px;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;border-collapse:collapse;">${detailRows}</table>
+              </td>
+            </tr>
+            <tr>
+              <td align="center" style="padding:4px 28px 12px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="width:100%;">
+                  <tr>
+                    <td align="center" bgcolor="#112c48" style="background-color:#112c48;border-radius:999px;">
+                      <a href="${ADMIN_URL}" target="_blank" style="display:block;padding:15px 20px;color:#ffffff;font-size:15px;line-height:20px;font-weight:700;text-align:center;text-decoration:none;border:1px solid #112c48;border-radius:999px;">Buka Moderasi Karier &amp; Usaha &rarr;</a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 28px 30px;text-align:center;">
+                <p style="margin:12px 0 4px;color:#526276;font-size:13px;line-height:20px;">Jika tombol tidak dapat dibuka, kunjungi:</p>
+                <a href="${ADMIN_URL}" target="_blank" style="color:#1b5f93;font-size:13px;line-height:20px;word-break:break-all;">${ADMIN_URL}</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:16px 28px;background-color:#f7f9fa;color:#718096;font-size:12px;line-height:18px;text-align:center;">Notifikasi otomatis dari website KABISAT Angkatan Tujuh.</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`,
   };
 }
 
