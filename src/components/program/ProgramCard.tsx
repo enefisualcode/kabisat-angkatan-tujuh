@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import StatusBadge from "@/components/ui/StatusBadge";
 import { cn } from "@/lib/utils";
-import { PROGRAM_ICONS } from "@/lib/program-icons";
 import type { Program } from "@/types";
 
 export default function ProgramCard({
@@ -13,8 +12,6 @@ export default function ProgramCard({
   program: Program;
   className?: string;
 }) {
-  const Icon = program.icon ? PROGRAM_ICONS[program.icon] : null;
-
   return (
     <Link
       href={`/program/${program.slug}`}
@@ -24,23 +21,14 @@ export default function ProgramCard({
       )}
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-navy/5">
-        {program.coverImage ? (
-          <Image
-            src={program.coverImage}
-            alt={program.title}
-            fill
-            sizes="320px"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : Icon ? (
-          <div className="flex h-full w-full items-center justify-center">
-            <Icon
-              size={44}
-              strokeWidth={1.5}
-              className="text-navy/25 transition-transform duration-500 group-hover:scale-110"
-            />
-          </div>
-        ) : null}
+        <Image
+          unoptimized
+          src="/og-image.png"
+          alt={program.title}
+          fill
+          sizes="320px"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
         <div className="absolute top-3 left-3">
           <StatusBadge status={program.status} />
         </div>
