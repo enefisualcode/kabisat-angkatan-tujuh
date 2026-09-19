@@ -32,20 +32,30 @@ export async function notifyOpportunitySubmission(id: string) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
   if (!apiKey || !from) {
-    console.error("Opportunity notification skipped: Resend environment is not configured", { id });
+    console.error("Opportunity notification skipped: Resend environment is not configured", {
+      id,
+      apiKeyConfigured: Boolean(apiKey),
+      fromConfigured: Boolean(from),
+    });
     return;
   }
+  console.info("Opportunity notification started", { id, recipientCount: RECIPIENTS.length });
   const client = createAdminClient();
   const { data: claimed, error: claimError } = await client.rpc("claim_opportunity_notification", { p_id: id });
   if (claimError) {
     console.error("Opportunity notification claim failed", { id, message: claimError.message });
     return;
   }
-  if (!claimed) return;
+  if (!claimed) {
+    console.info("Opportunity notification skipped: already claimed or sent", { id });
+    return;
+  }
+  console.info("Opportunity notification claimed", { id });
   const { data: opportunity, error: opportunityError } = await client.from("opportunities").select("*").eq("id", id).eq("status", "pending").maybeSingle();
   if (opportunityError || !opportunity) {
     console.error("Opportunity notification record unavailable", { id, message: opportunityError?.message });
-    await client.from("opportunity_notifications").update({ status: "failed" }).eq("opportunity_id", id);
+    const { error: markerError } = await client.from("opportunity_notifications").update({ status: "failed" }).eq("opportunity_id", id);
+    if (markerError) console.error("Opportunity notification failure marker update failed", { id, message: markerError.message });
     return;
   }
   try {
@@ -54,8 +64,10 @@ export async function notifyOpportunitySubmission(id: string) {
     if (response.error) throw new Error(response.error.message);
     const { error: updateError } = await client.from("opportunity_notifications").update({ status: "sent", sent_at: new Date().toISOString(), provider_id: response.data?.id || null }).eq("opportunity_id", id);
     if (updateError) console.error("Opportunity notification sent but marker update failed", { id, message: updateError.message });
+    else console.info("Opportunity notification sent", { id, providerIdPresent: Boolean(response.data?.id) });
   } catch (error) {
     console.error("Opportunity notification delivery failed", { id, message: error instanceof Error ? error.message : "unknown provider error" });
-    await client.from("opportunity_notifications").update({ status: "failed" }).eq("opportunity_id", id);
+    const { error: markerError } = await client.from("opportunity_notifications").update({ status: "failed" }).eq("opportunity_id", id);
+    if (markerError) console.error("Opportunity notification failure marker update failed", { id, message: markerError.message });
   }
 }
