@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { LoaderCircle } from "lucide-react";
 import { MAX_IMAGES, validateImage } from "@/lib/opportunity-validation";
 
 type Selection = { file: File; url: string; id: string };
-export default function ImageUploadPreview({ id, label, onChange }: { id: string; label: string; onChange: (files: File[]) => void }) {
+export default function ImageUploadPreview({ id, label, onChange, uploadingIndexes = [] }: { id: string; label: string; onChange: (files: File[]) => void; uploadingIndexes?: number[] }) {
   const [photos, setPhotos] = useState<Selection[]>([]);
   const [error, setError] = useState("");
   const current = useRef<Selection[]>([]);
@@ -31,14 +32,17 @@ export default function ImageUploadPreview({ id, label, onChange }: { id: string
     {error && <p role="alert" className="mt-2 text-sm text-red-700">{error}</p>}
     <ol className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
       {photos.map((photo, index) => <li key={photo.id} className="relative rounded-xl border bg-white p-2">
-        {/* Blob previews never pass through the image optimizer. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={photo.url} alt={`Pratinjau foto ${index + 1}: ${photo.file.name}`} className="h-28 w-full rounded-lg object-cover" />
-        <span aria-label={`Urutan foto ${index + 1}`} className="absolute top-3 left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gold text-xs font-bold text-navy shadow-sm">{index + 1}</span>
+        <div className="relative">
+          {/* Blob previews never pass through the image optimizer. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={photo.url} alt={`Pratinjau foto ${index + 1}: ${photo.file.name}`} className="h-28 w-full rounded-lg object-cover" />
+          {uploadingIndexes.includes(index) ? <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-navy/45 text-cream" role="status" aria-label={`Mengupload foto ${index + 1}`}><LoaderCircle size={20} className="animate-spin" /></div> : null}
+        </div>
+        <span aria-label={`Urutan foto ${index + 1}`} className="absolute top-3 left-3 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-gold text-xs font-bold text-navy shadow-sm">{index + 1}</span>
         <p className="my-2 text-xs font-semibold">{index === 0 ? "Foto 1 · Cover utama" : `Foto ${index + 1}`}</p>
         <div className="flex flex-wrap gap-2 text-xs">
-          <button type="button" disabled={index === 0} onClick={() => move(index, -1)} aria-label={`Majukan foto ${index + 1}`} className="rounded border p-2 disabled:opacity-30">?</button>
-          <button type="button" disabled={index === photos.length - 1} onClick={() => move(index, 1)} aria-label={`Mundurkan foto ${index + 1}`} className="rounded border p-2 disabled:opacity-30">?</button>
+          <button type="button" disabled={index === 0} onClick={() => move(index, -1)} aria-label={`Majukan foto ${index + 1}`} className="rounded border p-2 disabled:opacity-30">←</button>
+          <button type="button" disabled={index === photos.length - 1} onClick={() => move(index, 1)} aria-label={`Mundurkan foto ${index + 1}`} className="rounded border p-2 disabled:opacity-30">→</button>
           <button type="button" className="rounded border p-2 text-red-700" aria-label={`Hapus foto ${index + 1}`} onClick={() => { URL.revokeObjectURL(photo.url); update(photos.filter(item => item.id !== photo.id)); }}>Hapus</button>
         </div>
       </li>)}
