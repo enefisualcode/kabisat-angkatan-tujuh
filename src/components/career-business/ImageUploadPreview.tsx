@@ -30,11 +30,12 @@ export default function ImageUploadPreview({ id, label, onChange }: { id: string
     <p className="mt-2 text-xs text-navy/65">Maksimal 5 foto JPEG, PNG, atau WebP, masing-masing 3 MB. Foto pertama menjadi cover.</p>
     {error && <p role="alert" className="mt-2 text-sm text-red-700">{error}</p>}
     <ol className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
-      {photos.map((photo, index) => <li key={photo.id} className="rounded-xl border bg-white p-2">
+      {photos.map((photo, index) => <li key={photo.id} className="relative rounded-xl border bg-white p-2">
         {/* Blob previews never pass through the image optimizer. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={photo.url} alt={`Pratinjau foto ${index + 1}: ${photo.file.name}`} className="h-28 w-full rounded-lg object-cover" />
-        <p className="my-2 text-xs font-semibold">{index === 0 ? "Cover utama" : `Foto ${index + 1}`}</p>
+        <span aria-label={`Urutan foto ${index + 1}`} className="absolute top-3 left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gold text-xs font-bold text-navy shadow-sm">{index + 1}</span>
+        <p className="my-2 text-xs font-semibold">{index === 0 ? "Foto 1 · Cover utama" : `Foto ${index + 1}`}</p>
         <div className="flex flex-wrap gap-2 text-xs">
           <button type="button" disabled={index === 0} onClick={() => move(index, -1)} aria-label={`Majukan foto ${index + 1}`} className="rounded border p-2 disabled:opacity-30">?</button>
           <button type="button" disabled={index === photos.length - 1} onClick={() => move(index, 1)} aria-label={`Mundurkan foto ${index + 1}`} className="rounded border p-2 disabled:opacity-30">?</button>

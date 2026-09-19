@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { OpportunityImage } from "@/types/opportunity";
 
 export default function OpportunityGallery({ images, title }: { images: OpportunityImage[]; title: string }) {
@@ -11,9 +11,9 @@ export default function OpportunityGallery({ images, title }: { images: Opportun
   const touchStartX = useRef<number | null>(null);
   const current = images[selected] || images[0];
   const hasMultipleImages = images.length > 1;
-  const goTo = (index: number) => setSelected((index + images.length) % images.length);
-  const previous = () => goTo(selected - 1);
-  const next = () => goTo(selected + 1);
+  const goTo = useCallback((index: number) => setSelected((index + images.length) % images.length), [images.length]);
+  const previous = useCallback(() => goTo(selected - 1), [goTo, selected]);
+  const next = useCallback(() => goTo(selected + 1), [goTo, selected]);
 
   useEffect(() => {
     if (!isViewerOpen) return;
@@ -26,7 +26,7 @@ export default function OpportunityGallery({ images, title }: { images: Opportun
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKeyDown);
     return () => { document.body.style.overflow = previousOverflow; document.removeEventListener("keydown", onKeyDown); };
-  }, [isViewerOpen, selected, hasMultipleImages]);
+  }, [isViewerOpen, hasMultipleImages, next, previous]);
 
   const photoAlt = current ? `${title} — foto ${selected + 1} dari ${images.length}` : `Ilustrasi ${title}`;
   return <section aria-label={`Galeri foto ${title}`}>

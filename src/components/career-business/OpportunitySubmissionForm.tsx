@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState, type FormEvent } from "react";
+import { LoaderCircle } from "lucide-react";
 import type { OpportunityType } from "@/types/opportunity";
 import { EMPLOYMENT_TYPES, validateSubmission, validateImages } from "@/lib/opportunity-validation";
 import ImageUploadPreview from "./ImageUploadPreview";
@@ -31,12 +32,20 @@ export default function OpportunitySubmissionForm({ type, onSuccess }: { type: O
       data.set("imageTypes", JSON.stringify(files.map(file => file.type)));
       const created = await send("/api/opportunities/submissions", data);
       session = { id: created.id, token: created.token };
-      for (let index = 0; index < files.length; index++) {
-        setProgress(`Mengupload foto ${index + 1} dari ${files.length}...`);
-        const upload = new FormData();
-        upload.set("token", session.token); upload.set("order", String(index)); upload.set("image", files[index]);
-        await send(`/api/opportunities/submissions/${session.id}/images`, upload);
+      let nextIndex = 0;
+      let completed = 0;
+      async function uploadWorker() {
+        while (nextIndex < files.length) {
+          const index = nextIndex++;
+          setProgress(`Mengunggah foto ${index + 1} dari ${files.length}...`);
+          const upload = new FormData();
+          upload.set("token", session!.token); upload.set("order", String(index)); upload.set("image", files[index]);
+          await send(`/api/opportunities/submissions/${session!.id}/images`, upload);
+          completed += 1;
+          setProgress(`Mengunggah foto ${completed} dari ${files.length}...`);
+        }
       }
+      await Promise.all(Array.from({ length: Math.min(2, files.length) }, uploadWorker));
       setProgress("Menyimpan posting...");
       const finish = new FormData(); finish.set("submissionId", session.id); finish.set("token", session.token);
       await send("/api/opportunities", finish);
@@ -72,7 +81,7 @@ export default function OpportunitySubmissionForm({ type, onSuccess }: { type: O
       </div>
       <ImageUploadPreview id={`${type}-image`} label="Poster, logo, atau foto (opsional)" onChange={setFiles} />
       <p className="text-xs text-navy/60">Kontak dan informasi posting akan tersedia bagi publik setelah disetujui pengurus.</p>
-      <button type="submit" className="min-h-12 w-full rounded-full bg-navy px-5 py-3 font-semibold text-cream">{busy ? progress || "Memvalidasi..." : "Kirim untuk Ditinjau"}</button>
+      <button type="submit" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-navy px-5 py-3 font-semibold text-cream disabled:opacity-70">{busy ? <><LoaderCircle size={17} className="animate-spin" />{progress || "Mengirim..."}</> : "Kirim untuk Ditinjau"}</button>
     </fieldset>
     {error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-800">{error}</p>}
   </form>;

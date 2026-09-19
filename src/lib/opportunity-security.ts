@@ -24,7 +24,8 @@ export async function consumeLimit(headers: Headers, scope: "submit" | "login") 
   // Vercel overwrites this header. Elsewhere, configure a trusted proxy; use a shared limit by default.
   const ip = process.env.VERCEL ? headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim() || "unknown" : "shared";
   const key = createHash("sha256").update(`${scope}:${ip}`).digest("hex");
-  const { data, error } = await createAdminClient().rpc("consume_opportunity_limit", { p_key: key, p_limit: scope === "login" ? 10 : 5, p_seconds: 900 });
+  const limit = scope === "login" ? 10 : 5;
+  const { data, error } = await createAdminClient().rpc("consume_opportunity_limit", { p_key: key, p_limit: limit, p_seconds: 900 });
   if (error) throw new Error("Pembatasan permintaan belum tersedia. Coba lagi nanti.");
   return data;
 }

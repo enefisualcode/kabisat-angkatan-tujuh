@@ -13,12 +13,14 @@ export type OpportunityInsert = Pick<OpportunityRow, "type" | "title" | "descrip
 export type OpportunityImageRow = { id: string; opportunity_id: string; storage_path: string; sort_order: number; created_at: string };
 export type OpportunityWithImages = OpportunityRow & { opportunity_images: OpportunityImageRow[] };
 export type UploadSessionRow = { id: string; token_hash: string; payload: OpportunityInsert; image_paths: string[]; status: "open" | "completed" | "cancelled"; expires_at: string; created_at: string };
+export type OpportunityNotificationRow = { opportunity_id: string; status: "sending" | "sent" | "failed"; created_at: string; sent_at: string | null; provider_id: string | null };
 export type Database = {
   public: {
     Tables: {
       opportunities: { Row: OpportunityRow; Insert: OpportunityInsert; Update: Partial<OpportunityRow>; Relationships: [] };
       opportunity_images: { Row: OpportunityImageRow; Insert: Pick<OpportunityImageRow, "opportunity_id" | "storage_path"> & Partial<OpportunityImageRow>; Update: Partial<OpportunityImageRow>; Relationships: [{ foreignKeyName: "opportunity_images_opportunity_id_fkey"; columns: ["opportunity_id"]; isOneToOne: false; referencedRelation: "opportunities"; referencedColumns: ["id"] }] };
       opportunity_upload_sessions: { Row: UploadSessionRow; Insert: Pick<UploadSessionRow, "id" | "token_hash" | "payload" | "image_paths"> & Partial<UploadSessionRow>; Update: Partial<UploadSessionRow>; Relationships: [] };
+      opportunity_notifications: { Row: OpportunityNotificationRow; Insert: Pick<OpportunityNotificationRow, "opportunity_id"> & Partial<OpportunityNotificationRow>; Update: Partial<OpportunityNotificationRow>; Relationships: [{ foreignKeyName: "opportunity_notifications_opportunity_id_fkey"; columns: ["opportunity_id"]; isOneToOne: true; referencedRelation: "opportunities"; referencedColumns: ["id"] }] };
     };
     Views: { [_ in never]: never };
     Functions: {
@@ -26,6 +28,7 @@ export type Database = {
       complete_opportunity_submission: { Args: { p_id: string; p_token_hash: string }; Returns: string };
       detach_opportunity_images: { Args: { p_id: string; p_paths: string[] }; Returns: undefined };
       delete_opportunity_record: { Args: { p_id: string; p_paths: string[] }; Returns: undefined };
+      claim_opportunity_notification: { Args: { p_id: string }; Returns: boolean };
     };
     Enums: { [_ in never]: never };
     CompositeTypes: { [_ in never]: never };
