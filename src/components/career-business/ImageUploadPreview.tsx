@@ -17,7 +17,7 @@ export default function ImageUploadPreview({ id, label, onChange }: { id: string
   }
   return <div>
     <label htmlFor={id} className="text-sm font-semibold text-navy">{label}</label>
-    <input id={id} type="file" multiple accept="image/jpeg,image/png,image/webp" className="mt-2 block w-full rounded-xl border border-dashed p-3 text-sm" onChange={event => {
+    <input id={id} type="file" multiple accept="image/jpeg,image/png,image/webp" className="mt-2 block w-full rounded-xl border border-dashed p-3 text-base sm:text-sm" onChange={event => {
       const incoming = Array.from(event.target.files || []);
       event.target.value = "";
       setError("");

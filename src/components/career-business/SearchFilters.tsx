@@ -18,7 +18,7 @@ export default function SearchFilters({ search, onSearchChange, activeTab, emplo
     <div className="space-y-4">
       <label className="block"><span className="sr-only">Cari lowongan atau usaha</span>
         <input type="search" value={search} onChange={(event) => onSearchChange(event.target.value)} placeholder="Cari lowongan atau usaha..."
-          className="min-h-12 w-full rounded-full border border-navy/15 bg-white px-5 text-sm text-navy outline-none placeholder:text-navy/45 focus:border-gold focus:ring-2 focus:ring-gold/25" />
+          className="min-h-12 w-full rounded-full border border-navy/15 bg-white px-5 text-base text-navy outline-none placeholder:text-navy/45 focus:border-gold focus:ring-2 focus:ring-gold/25 sm:text-sm" />
       </label>
       {activeTab === "job" ? (
         <div className="flex flex-wrap gap-2" aria-label="Filter jenis pekerjaan">
@@ -27,7 +27,7 @@ export default function SearchFilters({ search, onSearchChange, activeTab, emplo
         </div>
       ) : (
         <label className="block max-w-xs"><span className="sr-only">Filter kategori usaha</span>
-          <select value={category} onChange={(event) => onCategoryChange(event.target.value)} className="min-h-11 w-full rounded-full border border-navy/15 bg-white px-4 text-sm text-navy outline-none focus:border-gold focus:ring-2 focus:ring-gold/25">
+          <select value={category} onChange={(event) => onCategoryChange(event.target.value)} className="min-h-11 w-full rounded-full border border-navy/15 bg-white px-4 text-base text-navy outline-none focus:border-gold focus:ring-2 focus:ring-gold/25 sm:text-sm">
             <option value="Semua">Semua Kategori</option>{categories.map((item) => <option key={item} value={item}>{item}</option>)}
           </select>
         </label>

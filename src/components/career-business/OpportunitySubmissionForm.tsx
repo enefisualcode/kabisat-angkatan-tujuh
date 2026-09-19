@@ -77,7 +77,7 @@ export default function OpportunitySubmissionForm({ type, onSuccess }: { type: O
     {error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-800">{error}</p>}
   </form>;
 }
-const inputClass = "mt-2 min-h-11 w-full rounded-xl border border-navy/15 bg-white px-3 py-2 font-normal focus:border-gold";
+const inputClass = "mt-2 min-h-11 w-full rounded-xl border border-navy/15 bg-white px-3 py-2 text-base font-normal focus:border-gold sm:text-sm";
 function Field({ label, name, type = "text", required = false, maxLength = 200 }: { label: string; name: string; type?: string; required?: boolean; maxLength?: number }) {
   return <label className="block text-sm font-semibold">{label}<input name={name} type={type} required={required} maxLength={type === "url" ? 2048 : maxLength} placeholder={type === "url" ? "https://" : undefined} className={inputClass} /></label>;
 }
