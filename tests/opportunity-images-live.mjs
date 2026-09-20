@@ -27,15 +27,15 @@ async function action(id,fields,cookie='') {
   return fetch(origin+'/admin/karier-usaha',{method:'POST',headers:{Origin:origin,Cookie:cookie},body:data,redirect:'manual'});
 }
 try {
-  assert.equal((await post('/api/opportunities/submissions',form(6))).status,400);
+  assert.equal((await post('/api/opportunities/submissions',form(11))).status,400);
   const badType=form(1); badType.set('imageTypes','["image/svg+xml"]'); assert.equal((await post('/api/opportunities/submissions',badType)).status,400);
-  console.log('PASS >5 files and non-image manifest rejected');
+  console.log('PASS >10 files and non-image manifest rejected');
 
-  for(const count of [1,5]) {
+  for(const count of [1,5,10]) {
     const session=await start(count,count===1?'job':'business');
     const paths=await sessionPaths(session);
-    // Five files at 3 MiB each prove this never depends on a 15 MiB HTTP request.
-    const bytes=count===5 ? Buffer.concat([png,Buffer.alloc(3*1024*1024-png.length)]) : png;
+    // Ten files at 3 MiB each prove this never depends on a single oversized request.
+    const bytes=count===5 || count===10 ? Buffer.concat([png,Buffer.alloc(3*1024*1024-png.length)]) : png;
     // Upload reverse order; the final gallery must follow chosen order, not completion order.
     for(let index=count-1;index>=0;index--) assert.equal((await upload(session,index,new File([bytes],`${index}.png`,{type:'image/png'}))).status,200);
     assert.equal((await complete(session)).status,201);
@@ -84,13 +84,13 @@ try {
   const cookie=login.headers.getSetCookie().map(value=>value.split(';')[0]).join('; ');
   for(const session of sessions.slice(0,2)) {
     const listing=await (await fetch(origin+'/admin/karier-usaha?status=published',{headers:{Cookie:cookie}})).text();
-    const article=listing.split('<article').find(part=>part.includes(session.id));assert.ok(article);
+    const article=listing.split('<article').slice(1).find(part=>part.includes(session.id));assert.ok(article);
     const images=await admin.from('opportunity_images').select('*').eq('opportunity_id',session.id);assert.ifError(images.error);
     for(const image of images.data) {
       assert.ok(article.includes(image.id),'Admin preview includes all images');
       assert.equal((await fetch(`${origin}/admin/karier-usaha/image/${session.id}?image=${image.id}`,{headers:{Cookie:cookie}})).status,200);
     }
-    const deleteForm=[...article.matchAll(/<form[\s\S]*?<\/form>/g)].map(match=>match[0]).find(form=>form.includes('Hapus'));assert.ok(deleteForm);
+    const deleteForm=[...article.matchAll(/<form[\s\S]*?<\/form>/g)].map(match=>match[0]).find(form=>form.includes(`value="${session.id}"`));assert.ok(deleteForm);
     const denied=await action(actionId(deleteForm),{id:session.id});assert.ok(denied.headers.get('location').includes('error=session'));
     const deletion=await action(actionId(deleteForm),{id:session.id},cookie);assert.ok(deletion.headers.get('location').includes('done=deleted'));
     assert.equal((await admin.from('opportunities').select('id').eq('id',session.id).maybeSingle()).data,null);

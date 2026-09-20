@@ -4,8 +4,8 @@ import { validateImages, MAX_IMAGE_BYTES } from '../src/lib/opportunity-validati
 import { orderedImages, opportunityImages, opportunityStoragePaths } from '../src/lib/opportunity-images.ts';
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aV5kAAAAASUVORK5CYII=', 'base64');
 const photo = () => new File([png], 'photo.png', {type:'image/png'});
-test('accept one through five images', async () => { await validateImages([photo()]); await validateImages(Array.from({length:5},photo)); });
-test('reject more than five', async () => { await assert.rejects(validateImages(Array.from({length:6},photo)), /5 foto/); });
+test('accept one through ten images', async () => { await validateImages([photo()]); await validateImages(Array.from({length:5},photo)); await validateImages(Array.from({length:10},photo)); });
+test('reject more than ten', async () => { await assert.rejects(validateImages(Array.from({length:11},photo)), /10 foto/); });
 test('reject oversized image among otherwise valid images', async () => {
   await assert.rejects(validateImages([photo(),new File([new Uint8Array(MAX_IMAGE_BYTES+1)],'big.png',{type:'image/png'})]), /3 MB/);
 });

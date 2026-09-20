@@ -23,12 +23,12 @@ export default function ImageUploadPreview({ id, label, onChange, uploadingIndex
       event.target.value = "";
       setError("");
       try {
-        if (photos.length + incoming.length > MAX_IMAGES) throw new Error("Maksimal 5 foto per posting.");
+        if (photos.length + incoming.length > MAX_IMAGES) throw new Error("Maksimal 10 foto per posting.");
         incoming.forEach(validateImage);
         update([...photos, ...incoming.map(file => ({ file, url: URL.createObjectURL(file), id: crypto.randomUUID() }))]);
       } catch (error) { setError(error instanceof Error ? error.message : "Foto tidak valid."); }
     }} />
-    <p className="mt-2 text-xs text-navy/65">Maksimal 5 foto JPEG, PNG, atau WebP, masing-masing 3 MB. Foto pertama menjadi cover.</p>
+    <p className="mt-2 text-xs text-navy/65">Maksimal 10 foto JPEG, PNG, atau WebP, masing-masing 3 MB. Foto pertama menjadi cover.</p>
     {error && <p role="alert" className="mt-2 text-sm text-red-700">{error}</p>}
     <ol className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
       {photos.map((photo, index) => <li key={photo.id} className="relative rounded-xl border bg-white p-2">

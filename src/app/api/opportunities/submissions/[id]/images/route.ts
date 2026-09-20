@@ -11,7 +11,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     if (session.status !== "open" || Date.parse(session.expires_at) < Date.now() + 120000) throw new SubmissionError("Sesi upload berakhir. Kirim ulang formulir.", 409);
     const order = String(form.get("order"));
     const file = form.get("image");
-    if (!/^[0-4]$/.test(order) || !session.image_paths[Number(order)] || !(file instanceof File) || form.getAll("image").length !== 1) throw new SubmissionError("Foto atau urutan tidak valid.");
+    if (!/^[0-9]$/.test(order) || !session.image_paths[Number(order)] || !(file instanceof File) || form.getAll("image").length !== 1) throw new SubmissionError("Foto atau urutan tidak valid.");
     try { await validateImageContent(file); } catch (error) { throw new SubmissionError(error instanceof Error ? error.message : "Foto tidak valid."); }
     const path = session.image_paths[Number(order)];
     const expectedType = path.endsWith(".jpg") ? "image/jpeg" : path.endsWith(".png") ? "image/png" : "image/webp";

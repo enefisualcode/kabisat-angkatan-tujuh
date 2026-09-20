@@ -1,0 +1,11 @@
+-- Historical migration placeholder.
+--
+-- Version 20260919090000 is already applied to the linked production database.
+-- Its original source file was unavailable when repository migration history
+-- was reconciled. The existing production schema was inspected and treated as
+-- the source of truth for the social and notification objects introduced by
+-- that historical change.
+--
+-- This file exists only to restore migration-version continuity. It is a NO-OP
+-- and MUST NOT be treated as a reconstruction of the original migration or as
+-- sufficient history for bootstrapping an empty database.
