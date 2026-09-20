@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateSubmission, validateImageContent, validateImage, MAX_IMAGE_BYTES } from '../src/lib/opportunity-validation.ts';
+import { validateSubmission, validateImageContent, validateImage, MAX_IMAGE_BYTES, normalizeInstagramUrl, normalizeWebsiteUrl } from '../src/lib/opportunity-validation.ts';
 import { filterJobs, filterBusinesses } from '../src/lib/opportunity-filters.ts';
 
 function form(type = 'job', extra = {}) {
@@ -13,18 +13,31 @@ test('job submission forces pending and normalizes WhatsApp', () => {
   assert.equal(row.status, 'pending'); assert.equal(row.published_at, null); assert.equal(row.whatsapp, '6281234567890'); assert.equal(row.company, 'Perusahaan');
 });
 test('business submission maps fields without job fields', () => {
-  const row = validateSubmission(form('business', { website: 'https://example.com' }));
+  const row = validateSubmission(form('business', { website: 'example.com' }));
   assert.equal(row.owner_name, 'Pemilik'); assert.equal(row.category, 'Kuliner'); assert.equal(row.company, undefined);
+  assert.equal(row.website, 'https://example.com');
+});
+test('Instagram formats normalize to the canonical profile URL', () => {
+  for (const value of ['nabilfalah', '@nabilfalah', 'instagram.com/nabilfalah', 'www.instagram.com/nabilfalah', 'https://instagram.com/nabilfalah', 'https://www.instagram.com/nabilfalah']) {
+    assert.equal(normalizeInstagramUrl(value), 'https://instagram.com/nabilfalah');
+    assert.equal(validateSubmission(form('business', { instagram: value })).instagram, 'https://instagram.com/nabilfalah');
+  }
+});
+test('website formats normalize to complete URLs', () => {
+  for (const value of ['nabilfalah.cloud', 'www.nabilfalah.cloud', 'https://nabilfalah.cloud', 'http://nabilfalah.cloud', 'https://www.nabilfalah.cloud']) {
+    assert.equal(normalizeWebsiteUrl(value), value.startsWith('http') ? value : `https://${value}`);
+    assert.equal(validateSubmission(form('business', { website: value })).website, normalizeWebsiteUrl(value));
+  }
 });
 test('required, length, WhatsApp and employment validation', () => {
   for (const extra of [{title:''}, {description:'x'.repeat(10001)}, {whatsapp:'abc'}, {employmentType:'CEO'}, {type:'invalid'}]) assert.throws(() => validateSubmission(form('job', extra)));
 });
 test('unsafe/malformed URLs rejected in every URL field', () => {
-  for (const value of ['javascript:alert(1)', 'not-a-url', 'https://user:password@example.com', 'data:text/html,hello']) {
+  for (const value of ['javascript:alert(1)', 'not a url', 'https://user:password@example.com', 'data:text/html,hello']) {
     assert.throws(() => validateSubmission(form('job', { applicationUrl: value })));
     assert.throws(() => validateSubmission(form('business', { website: value })));
-    assert.throws(() => validateSubmission(form('business', { instagram: value })));
   }
+  for (const value of ['https://example.com/nabilfalah', 'https://evil.example/nabilfalah', '@bad name']) assert.throws(() => validateSubmission(form('business', { instagram: value })));
 });
 test('date validation rejects rollover dates and accepts valid leap dates', () => {
   for (const deadline of ['2026-02-30', '2026-13-01', 'tomorrow']) assert.throws(() => validateSubmission(form('job', { deadline })));

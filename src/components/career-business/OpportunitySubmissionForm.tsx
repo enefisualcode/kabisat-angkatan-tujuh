@@ -85,7 +85,7 @@ export default function OpportunitySubmissionForm({ type, onSuccess }: { type: O
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="WhatsApp (contoh 62812...)" name="whatsapp" type="tel" required maxLength={30} />
         <Field label="Nama pengirim (ditampilkan pada lowongan)" name="submittedBy" required />
-        {type === "job" ? <><Field label="Deadline (opsional)" name="deadline" type="date" /><Field label="Link lamaran (opsional)" name="applicationUrl" type="url" /></> : <><Field label="URL Instagram (opsional)" name="instagram" type="url" /><Field label="Website (opsional)" name="website" type="url" /></>}
+        {type === "job" ? <><Field label="Deadline (opsional)" name="deadline" type="date" /><Field label="Link lamaran (opsional)" name="applicationUrl" type="url" /></> : <><Field label="URL Instagram (opsional)" name="instagram" placeholder="@username atau link Instagram" /><Field label="Website (opsional)" name="website" placeholder="contoh.com atau https://contoh.com" /></>}
       </div>
       <ImageUploadPreview id={`${type}-image`} label="Poster, logo, atau foto (opsional)" onChange={setFiles} uploadingIndexes={uploadingIndexes} />
       <p className="text-xs text-navy/60">Kontak dan informasi posting akan tersedia bagi publik setelah disetujui pengurus.</p>
@@ -99,7 +99,7 @@ export default function OpportunitySubmissionForm({ type, onSuccess }: { type: O
   </form>;
 }
 const inputClass = "mt-2 min-h-11 w-full rounded-xl border border-navy/15 bg-white px-3 py-2 text-base font-normal focus:border-gold sm:text-sm";
-function Field({ label, name, type = "text", required = false, maxLength = 200 }: { label: string; name: string; type?: string; required?: boolean; maxLength?: number }) {
-  return <label className="block text-sm font-semibold">{label}<input name={name} type={type} required={required} maxLength={type === "url" ? 2048 : maxLength} placeholder={type === "url" ? "https://" : undefined} className={inputClass} /></label>;
+function Field({ label, name, type = "text", required = false, maxLength = 200, placeholder }: { label: string; name: string; type?: string; required?: boolean; maxLength?: number; placeholder?: string }) {
+  return <label className="block text-sm font-semibold">{label}<input name={name} type={type} required={required} maxLength={type === "url" ? 2048 : maxLength} placeholder={placeholder ?? (type === "url" ? "https://" : undefined)} className={inputClass} /></label>;
 }
 function TextArea({ label, name }: { label: string; name: string }) { return <label className="block text-sm font-semibold">{label}<textarea name={name} required maxLength={10000} rows={4} className={inputClass} /></label>; }
