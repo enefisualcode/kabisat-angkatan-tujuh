@@ -8,7 +8,6 @@ import {
   User,
   Users,
   ArrowLeft,
-  ImageOff,
 } from "lucide-react";
 import PageHero from "@/components/layout/PageHero";
 import Container from "@/components/ui/Container";
@@ -18,7 +17,6 @@ import MilestoneChecklist from "@/components/program/MilestoneChecklist";
 import { programs, getProgramBySlug } from "@/data/programs";
 import { getGalleryForEvent } from "@/data/gallery";
 import { cn, STAGE_LABELS, STAGE_STYLES } from "@/lib/utils";
-import { PROGRAM_ICONS } from "@/lib/program-icons";
 import { site } from "@/data/site";
 
 export function generateStaticParams() {
@@ -98,7 +96,6 @@ export default async function ProgramDetailPage(
       ? program.actualDate
       : program.estimatedDate;
   const eventStartDate = program.actualDate ?? program.estimatedDate;
-  const Icon = program.icon ? PROGRAM_ICONS[program.icon] : null;
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -167,26 +164,19 @@ export default async function ProgramDetailPage(
         </Link>
       </PageHero>
 
-      {program.coverImage ? (
-        <div className="mx-auto -mt-10 max-w-5xl px-6 sm:-mt-14 sm:px-8">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-card-lg shadow-xl shadow-navy/20">
-            <Image
-              src={program.coverImage}
-              alt={program.title}
-              fill
-              sizes="(min-width: 1024px) 960px, 100vw"
-              className="object-cover"
-              priority
-            />
-          </div>
+      <div className="mx-auto -mt-10 max-w-5xl px-6 sm:-mt-14 sm:px-8">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-card-lg bg-navy shadow-xl shadow-navy/20">
+          <Image
+            unoptimized={!program.coverImage}
+            src={program.coverImage ?? site.ogImage}
+            alt={program.coverImage ? program.title : `Placeholder KABISAT untuk ${program.title}`}
+            fill
+            sizes="(min-width: 1024px) 960px, 100vw"
+            className="object-cover"
+            priority
+          />
         </div>
-      ) : Icon ? (
-        <div className="mx-auto -mt-10 max-w-5xl px-6 sm:-mt-14 sm:px-8">
-          <div className="relative flex aspect-[16/9] items-center justify-center overflow-hidden rounded-card-lg bg-navy/5 shadow-xl shadow-navy/20">
-            <Icon size={88} strokeWidth={1.5} className="text-navy/25" />
-          </div>
-        </div>
-      ) : null}
+      </div>
 
       <section className="py-20 sm:py-24">
         <Container className="max-w-3xl">
@@ -287,9 +277,15 @@ export default async function ProgramDetailPage(
                   ))}
                 </div>
               ) : (
-                <div className="flex flex-col items-center gap-3 rounded-card border border-dashed border-navy/15 py-12 text-center text-sm text-navy/45">
-                  <ImageOff size={22} />
-                  Dokumentasi akan ditambahkan setelah kegiatan berlangsung.
+                <div className="relative aspect-[16/9] overflow-hidden rounded-card bg-navy shadow-md shadow-navy/15">
+                  <Image
+                    unoptimized
+                    src={site.ogImage}
+                    alt={`Placeholder KABISAT untuk dokumentasi ${program.title}`}
+                    fill
+                    sizes="(min-width: 768px) 768px, 100vw"
+                    className="object-cover"
+                  />
                 </div>
               )}
             </div>

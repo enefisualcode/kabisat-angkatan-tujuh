@@ -6,6 +6,7 @@ import DeleteOpportunityButton from "@/components/career-business/DeleteOpportun
 import type { OpportunityRow } from "@/types/database";
 import { opportunityImages } from "@/lib/opportunity-images";
 import OpportunityGallery from "@/components/career-business/OpportunityGallery";
+import AdminLoginForm from "@/components/career-business/AdminLoginForm";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Moderasi Karier & Usaha", robots: { index: false, follow: false } };
@@ -30,7 +31,7 @@ const previewLabels: Partial<Record<keyof OpportunityRow, string>> = {
 export default async function AdminPage({ searchParams }: { searchParams: Promise<{ error?: string; done?: string; page?: string; status?: string }> }) {
   const query = await searchParams;
   const authenticated = await isAdmin();
-  if (!authenticated) return <section className="mx-auto max-w-lg px-6 py-24"><h1 className="text-2xl font-bold">Admin Karier & Usaha</h1>{!adminConfigured() ? <p className="mt-4">Admin belum dikonfigurasi. Ikuti panduan environment di docs/karier-usaha.md.</p> : <form action={login} className="mt-6 space-y-4"><label className="block">Password admin<input name="password" type="password" required autoComplete="current-password" maxLength={512} className="mt-2 w-full rounded-xl border p-3" /></label><button className="rounded-full bg-navy px-6 py-3 text-cream">Masuk</button></form>}{query.error && <p role="alert" className="mt-4 text-red-700">{messages[query.error] || "Permintaan gagal."}</p>}</section>;
+  if (!authenticated) return <section className="mx-auto max-w-lg px-6 py-24"><h1 className="text-2xl font-bold">Admin Karier & Usaha</h1>{!adminConfigured() ? <p className="mt-4">Admin belum dikonfigurasi. Ikuti panduan environment di docs/karier-usaha.md.</p> : <AdminLoginForm action={login} />}{query.error && <p role="alert" className="mt-4 text-red-700">{messages[query.error] || "Permintaan gagal."}</p>}</section>;
   const page = Math.max(0, Math.min(100000, Number.parseInt(query.page || "0", 10) || 0));
   const status = query.status === "published" || query.status === "rejected" ? query.status : "pending";
   const { data, error, count } = await createAdminClient().from("opportunities").select("*, opportunity_images(*)", { count: "exact" }).eq("status", status).order("created_at").order("id").range(page * 25, page * 25 + 24);
