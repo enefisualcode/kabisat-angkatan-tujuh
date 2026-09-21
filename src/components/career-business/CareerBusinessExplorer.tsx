@@ -14,7 +14,7 @@ import { filterJobs, filterBusinesses } from "@/lib/opportunity-filters";
 export default function CareerBusinessExplorer({ opportunities }: { opportunities: Opportunity[] }) {
   const jobs = opportunities.filter(item => item.type === "job");
   const businesses = opportunities.filter(item => item.type === "business");
-  const [activeTab, setActiveTab] = useState<ExplorerTab>("job");
+  const [activeTab, setActiveTab] = useState<ExplorerTab>("business");
   const [search, setSearch] = useState("");
   const [employmentType, setEmploymentType] = useState<"Semua" | EmploymentType>("Semua");
   const [category, setCategory] = useState("Semua");
