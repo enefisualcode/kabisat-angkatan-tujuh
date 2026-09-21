@@ -5,6 +5,7 @@ export const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
 export const MAX_IMAGES = 10;
 export const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 export const EMPLOYMENT_TYPES: EmploymentType[] = ["Full Time", "Part Time", "Internship", "Freelance"];
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validateImageTypes(types: unknown): asserts types is string[] {
   if (!Array.isArray(types) || types.length > MAX_IMAGES) throw new Error("Maksimal 10 foto per posting.");
@@ -70,7 +71,7 @@ export function normalizeWebsiteUrl(value: string | null | undefined) {
 }
 
 export function validateSubmission(form: FormData): OpportunityInsert {
-  const labels: Record<string, string> = { title: "Judul / nama usaha", description: "Deskripsi", location: "Lokasi", whatsapp: "WhatsApp", submittedBy: "Nama pengirim", company: "Perusahaan", requirements: "Persyaratan", ownerName: "Nama pemilik", category: "Kategori", applicationUrl: "Link lamaran", instagram: "Instagram", website: "Website", deadline: "Deadline", employmentType: "Jenis pekerjaan", type: "Jenis informasi" };
+  const labels: Record<string, string> = { title: "Judul / nama usaha", description: "Deskripsi", location: "Lokasi", whatsapp: "WhatsApp", submittedBy: "Nama pengirim", company: "Perusahaan", requirements: "Persyaratan", ownerName: "Nama pemilik", category: "Kategori", applicationUrl: "Link lamaran", applicationEmail: "Email lamaran", instagram: "Instagram", website: "Website", deadline: "Deadline", employmentType: "Jenis pekerjaan", type: "Jenis informasi" };
   function text(name: string, required = false, max = 200) {
     const raw = form.get(name);
     if (raw !== null && typeof raw !== "string") throw new Error(`${labels[name] || name}: format tidak valid.`);
@@ -96,5 +97,12 @@ export function validateSubmission(form: FormData): OpportunityInsert {
   if (!EMPLOYMENT_TYPES.includes(employment)) throw new Error("Jenis pekerjaan tidak valid.");
   const deadline = text("deadline");
   if (deadline && (!/^\d{4}-\d{2}-\d{2}$/.test(deadline) || !Number.isFinite(Date.parse(deadline)) || new Date(deadline).toISOString().slice(0, 10) !== deadline)) throw new Error("Tanggal deadline tidak valid.");
-  return { ...common, type, company: text("company", true), employment_type: employment, requirements: text("requirements", true, 10000), deadline: deadline || null, application_url: url("applicationUrl") };
+  const applicationMethod = text("applicationMethod");
+  if (applicationMethod !== "link" && applicationMethod !== "email") throw new Error("Pilih metode lamaran.");
+  const applicationUrl = url("applicationUrl");
+  const applicationEmail = text("applicationEmail", false, 320).toLowerCase();
+  if (applicationEmail && !EMAIL_PATTERN.test(applicationEmail)) throw new Error("Email lamaran: gunakan alamat email yang valid.");
+  if (applicationMethod === "link" && !applicationUrl) throw new Error("Link lamaran wajib diisi.");
+  if (applicationMethod === "email" && !applicationEmail) throw new Error("Email lamaran wajib diisi.");
+  return { ...common, type, company: text("company", true), employment_type: employment, requirements: text("requirements", true, 10000), deadline: deadline || null, application_url: applicationMethod === "link" ? applicationUrl : null, application_email: applicationMethod === "email" ? applicationEmail : null };
 }

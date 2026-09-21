@@ -5,12 +5,17 @@ import { filterJobs, filterBusinesses } from '../src/lib/opportunity-filters.ts'
 
 function form(type = 'job', extra = {}) {
   const data = new FormData();
-  for (const [key, value] of Object.entries({ type, title: 'Peluang Alumni', description: 'Deskripsi', location: 'Bogor', whatsapp: '0812-3456-7890', submittedBy: 'Alumni', company: 'Perusahaan', employmentType: 'Full Time', requirements: 'Komunikatif', ownerName: 'Pemilik', category: 'Kuliner', ...extra })) data.set(key, value);
+  for (const [key, value] of Object.entries({ type, title: 'Peluang Alumni', description: 'Deskripsi', location: 'Bogor', whatsapp: '0812-3456-7890', submittedBy: 'Alumni', company: 'Perusahaan', employmentType: 'Full Time', requirements: 'Komunikatif', applicationMethod: 'link', applicationUrl: 'https://example.com/apply', ownerName: 'Pemilik', category: 'Kuliner', ...extra })) data.set(key, value);
   return data;
 }
 test('job submission forces pending and normalizes WhatsApp', () => {
   const row = validateSubmission(form('job', { status: 'published', published_at: new Date().toISOString() }));
   assert.equal(row.status, 'pending'); assert.equal(row.published_at, null); assert.equal(row.whatsapp, '6281234567890'); assert.equal(row.company, 'Perusahaan');
+});
+test('job submission supports email applications', () => {
+  const row = validateSubmission(form('job', { applicationMethod: 'email', applicationUrl: '', applicationEmail: ' Hiring@Example.com ' }));
+  assert.equal(row.application_url, null); assert.equal(row.application_email, 'hiring@example.com');
+  assert.throws(() => validateSubmission(form('job', { applicationMethod: 'email', applicationUrl: '', applicationEmail: 'not-an-email' })));
 });
 test('business submission maps fields without job fields', () => {
   const row = validateSubmission(form('business', { website: 'example.com' }));

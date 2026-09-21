@@ -12,6 +12,7 @@ export default function OpportunitySubmissionForm({ type, onSuccess }: { type: O
   const [files, setFiles] = useState<File[]>([]);
   const [progress, setProgress] = useState({ message: "", percent: 0 });
   const [uploadingIndexes, setUploadingIndexes] = useState<number[]>([]);
+  const [applicationMethod, setApplicationMethod] = useState<"link" | "email">("link");
   const inFlight = useRef(false);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -85,7 +86,7 @@ export default function OpportunitySubmissionForm({ type, onSuccess }: { type: O
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="WhatsApp (contoh 62812...)" name="whatsapp" type="tel" required maxLength={30} />
         <Field label="Nama pengirim (ditampilkan pada lowongan)" name="submittedBy" required />
-        {type === "job" ? <><Field label="Deadline (opsional)" name="deadline" type="date" /><Field label="Link lamaran (opsional)" name="applicationUrl" type="url" /></> : <><Field label="URL Instagram (opsional)" name="instagram" placeholder="@username atau link Instagram" /><Field label="Website (opsional)" name="website" placeholder="contoh.com atau https://contoh.com" /></>}
+        {type === "job" ? <><Field label="Deadline (opsional)" name="deadline" type="date" /><fieldset className="sm:col-span-2"><legend className="text-sm font-semibold">Metode lamaran <span className="font-normal text-navy/60">(pilih salah satu)</span></legend><div className="mt-2 grid gap-2 sm:grid-cols-2"><label className="flex cursor-pointer items-center gap-2 rounded-xl border border-navy/15 bg-white px-3 py-3 text-sm font-normal"><input type="radio" name="applicationMethod" value="link" checked={applicationMethod === "link"} onChange={() => setApplicationMethod("link")} />Kirim link lamaran</label><label className="flex cursor-pointer items-center gap-2 rounded-xl border border-navy/15 bg-white px-3 py-3 text-sm font-normal"><input type="radio" name="applicationMethod" value="email" checked={applicationMethod === "email"} onChange={() => setApplicationMethod("email")} />Lamaran melalui email</label></div></fieldset>{applicationMethod === "link" ? <Field label="Link lamaran" name="applicationUrl" type="url" required /> : <Field label="Email penerima lamaran" name="applicationEmail" type="email" required placeholder="rekrutmen@contoh.com" />}</> : <><Field label="URL Instagram (opsional)" name="instagram" placeholder="@username atau link Instagram" /><Field label="Website (opsional)" name="website" placeholder="contoh.com atau https://contoh.com" /></>}
       </div>
       <ImageUploadPreview id={`${type}-image`} label="Poster, logo, atau foto (opsional)" onChange={setFiles} uploadingIndexes={uploadingIndexes} />
       <p className="text-xs text-navy/60">Kontak dan informasi posting akan tersedia bagi publik setelah disetujui pengurus.</p>

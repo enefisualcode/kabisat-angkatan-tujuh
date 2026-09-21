@@ -34,6 +34,7 @@ export interface JobOpportunity extends OpportunityBase {
   requirements: string[];
   deadline?: string;
   applicationUrl: string;
+  applicationEmail: string;
   submittedBy: string;
 }
 

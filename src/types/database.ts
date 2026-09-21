@@ -6,7 +6,7 @@ export type OpportunityRow = {
   whatsapp: string | null; submitted_by: string | null; published_at: string | null;
   created_at: string; updated_at: string; company: string | null;
   employment_type: EmploymentType | null; requirements: string | null; deadline: string | null;
-  application_url: string | null; owner_name: string | null; category: string | null;
+  application_url: string | null; application_email: string | null; owner_name: string | null; category: string | null;
   instagram: string | null; website: string | null;
 };
 export type OpportunityInsert = Pick<OpportunityRow, "type" | "title" | "description"> & Partial<Omit<OpportunityRow, "type" | "title" | "description">>;

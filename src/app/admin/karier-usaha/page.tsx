@@ -23,7 +23,7 @@ Object.assign(messages, {
 const statuses = { pending: "Pending", published: "Published", rejected: "Rejected" } as const;
 const previewLabels: Partial<Record<keyof OpportunityRow, string>> = {
   description: "Deskripsi", company: "Perusahaan", employment_type: "Jenis pekerjaan",
-  requirements: "Persyaratan", deadline: "Batas pendaftaran", application_url: "Link lamaran",
+  requirements: "Persyaratan", deadline: "Batas pendaftaran", application_url: "Link lamaran", application_email: "Email lamaran",
   owner_name: "Pemilik usaha", category: "Kategori", whatsapp: "WhatsApp",
   instagram: "Instagram", website: "Website", created_at: "Dikirim pada",
 };

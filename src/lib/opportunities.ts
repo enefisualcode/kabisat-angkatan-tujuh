@@ -13,7 +13,7 @@ export function mapOpportunity(row: OpportunityWithImages): Opportunity {
     images, image: images[0]?.url || "/og-image.png", publishedAt: row.published_at || row.created_at };
   return row.type === "job" ? { ...base, type: "job", title: row.title, company: row.company || "",
     employmentType: row.employment_type || "Full Time", requirements: (row.requirements || "").split("\n").filter(Boolean),
-    deadline: row.deadline || undefined, applicationUrl: safeUrl(row.application_url), submittedBy: row.submitted_by || "Alumni" }
+    deadline: row.deadline || undefined, applicationUrl: safeUrl(row.application_url), applicationEmail: row.application_email || "", submittedBy: row.submitted_by || "Alumni" }
     : { ...base, type: "business", businessName: row.title, ownerName: row.owner_name || "", category: row.category || "Lainnya", instagram: safeUrl(row.instagram), website: safeUrl(row.website) };
 }
 
