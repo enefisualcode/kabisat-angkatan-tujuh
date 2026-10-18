@@ -19,6 +19,20 @@ export const programs: Program[] = [
     milestones: [],
   },
   {
+    id: "prog-4",
+    slug: "kabisat-run",
+    title: "KABISAT Sport",
+    shortDescription:
+      "Agenda olahraga bersama untuk mempererat kebersamaan alumni.",
+    description:
+      "KABISAT Sport adalah wadah kegiatan olahraga bersama alumni, mulai dari futsal, lari, hingga olahraga lainnya, untuk mempererat kebersamaan.",
+    status: "completed",
+    stage: "done",
+    icon: "footprints",
+    coverImage: "/gallery/kabisat-sport/futsal-zona-futsal.jpg",
+    milestones: [],
+  },
+  {
     id: "prog-2",
     slug: "ngobarji",
     title: "Ngobarji",
@@ -40,20 +54,6 @@ export const programs: Program[] = [
     status: "planned",
     stage: "coming-soon",
     icon: "flame",
-    milestones: [],
-  },
-  {
-    id: "prog-4",
-    slug: "kabisat-run",
-    title: "KABISAT Sport",
-    shortDescription:
-      "Agenda olahraga bersama untuk menjaga kebugaran dan kebersamaan alumni.",
-    description:
-      "KABISAT Sport adalah wadah kegiatan olahraga bersama alumni, mulai dari futsal, lari, hingga olahraga lainnya, untuk menjaga kebugaran sekaligus mempererat kebersamaan.",
-    status: "planned",
-    stage: "coming-soon",
-    icon: "footprints",
-    coverImage: "/gallery/kabisat-sport/futsal-zona-futsal.jpg",
     milestones: [],
   },
   {
