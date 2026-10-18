@@ -1,5 +1,6 @@
 import Hero from "@/components/home/Hero";
 import ProgramsPreview from "@/components/home/ProgramsPreview";
+import CareerBusinessPreview from "@/components/home/CareerBusinessPreview";
 import CommitteePreview from "@/components/home/CommitteePreview";
 import GalleryPreview from "@/components/home/GalleryPreview";
 import ClosingCta from "@/components/home/ClosingCta";
@@ -18,6 +19,7 @@ export default function Home() {
     <>
       <Hero />
       <ProgramsPreview />
+      <CareerBusinessPreview />
       <CommitteePreview />
       <GalleryPreview />
       <ClosingCta />

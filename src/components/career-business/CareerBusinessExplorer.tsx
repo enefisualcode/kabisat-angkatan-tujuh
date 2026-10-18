@@ -11,10 +11,10 @@ import SearchFilters from "./SearchFilters";
 import SubmissionModal from "./SubmissionModal";
 import { filterJobs, filterBusinesses } from "@/lib/opportunity-filters";
 
-export default function CareerBusinessExplorer({ opportunities }: { opportunities: Opportunity[] }) {
+export default function CareerBusinessExplorer({ opportunities, initialTab = "business" }: { opportunities: Opportunity[]; initialTab?: ExplorerTab }) {
   const jobs = opportunities.filter(item => item.type === "job");
   const businesses = opportunities.filter(item => item.type === "business");
-  const [activeTab, setActiveTab] = useState<ExplorerTab>("business");
+  const [activeTab, setActiveTab] = useState<ExplorerTab>(initialTab);
   const [search, setSearch] = useState("");
   const [employmentType, setEmploymentType] = useState<"Semua" | EmploymentType>("Semua");
   const [category, setCategory] = useState("Semua");

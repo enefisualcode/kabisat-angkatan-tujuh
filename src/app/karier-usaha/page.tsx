@@ -11,7 +11,9 @@ export const metadata = createPageMetadata({
   path: "/karier-usaha",
 });
 
-export default async function KarierUsahaPage() {
+export default async function KarierUsahaPage(props: PageProps<"/karier-usaha">) {
+  const { tab } = await props.searchParams;
+  const initialTab = tab === "job" ? "job" : "business";
   const opportunities = await getPublishedOpportunities();
-  return <><PageHero eyebrow="Jejaring Alumni" title="Karier & Usaha" description="Temukan peluang kerja, bagikan kesempatan, dan dukung usaha sesama alumni KABISAT Angkatan Tujuh." /><CareerBusinessExplorer opportunities={opportunities} /></>;
+  return <><PageHero eyebrow="Jejaring Alumni" title="Karier & Usaha" description="Temukan peluang kerja, bagikan kesempatan, dan dukung usaha sesama alumni KABISAT Angkatan Tujuh." /><CareerBusinessExplorer opportunities={opportunities} initialTab={initialTab} /></>;
 }

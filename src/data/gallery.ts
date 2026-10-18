@@ -82,16 +82,24 @@ export const gallery: GalleryItem[] = [
     year: 2026,
     image: "/gallery/halal-bihalal-3.jpg",
   },
+  {
+    id: "maulid-nabi-1448-h-cover",
+    title: "Maulid Nabi 1448 H — Foto 1",
+    event: "Maulid Nabi 1448 H",
+    year: 2026,
+    location: "Depok",
+    image: "/programs/maulid-cover.jpg",
+    featured: true,
+  },
   ...Array.from({ length: 24 }, (_, index) => index + 1)
     .filter((photoNumber) => photoNumber !== 2)
     .map((photoNumber, index) => ({
       id: `maulid-nabi-1448-h-${photoNumber}`,
-      title: `Maulid Nabi 1448 H — Foto ${index + 1}`,
+      title: `Maulid Nabi 1448 H — Foto ${index + 2}`,
       event: "Maulid Nabi 1448 H",
       year: 2026,
       location: "Depok",
       image: `/gallery/maulid-nabi-1448-h/maulid-2026-${photoNumber}.jpg`,
-      ...(index === 0 ? { featured: true } : {}),
     })),
 ];
 
