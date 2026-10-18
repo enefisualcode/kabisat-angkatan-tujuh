@@ -36,9 +36,9 @@ export const programs: Program[] = [
     id: "prog-2",
     slug: "ngobarji",
     title: "Ngobarji",
-    shortDescription: "Ngobrol bareng santai antar alumni KABISAT.",
+    shortDescription: "Ngopi bareng sambil ngaji bersama alumni KABISAT.",
     description:
-      "Ngobarji adalah agenda ngobrol santai antar alumni untuk mempererat silaturahmi sekaligus berbagi kabar dan cerita.",
+      "Ngobarji adalah agenda ngopi bareng sambil ngaji bersama alumni KABISAT untuk mempererat silaturahmi dan menambah wawasan keislaman.",
     status: "planned",
     stage: "coming-soon",
     icon: "message-circle",
