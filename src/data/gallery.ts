@@ -87,7 +87,7 @@ export const gallery: GalleryItem[] = [
     title: "Maulid Nabi 1448 H — Foto 1",
     event: "Maulid Nabi 1448 H",
     year: 2026,
-    location: "Depok",
+    location: "Padepokan Aswaja, Ciputat",
     image: "/programs/maulid-cover.jpg",
     featured: true,
   },
@@ -98,7 +98,7 @@ export const gallery: GalleryItem[] = [
       title: `Maulid Nabi 1448 H — Foto ${index + 2}`,
       event: "Maulid Nabi 1448 H",
       year: 2026,
-      location: "Depok",
+      location: "Padepokan Aswaja, Ciputat",
       image: `/gallery/maulid-nabi-1448-h/maulid-2026-${photoNumber}.jpg`,
     })),
   {

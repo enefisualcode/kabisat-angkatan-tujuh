@@ -14,9 +14,10 @@ import Container from "@/components/ui/Container";
 import FadeIn from "@/components/ui/FadeIn";
 import StatusBadge from "@/components/ui/StatusBadge";
 import MilestoneChecklist from "@/components/program/MilestoneChecklist";
+import ProgramGallerySlider from "@/components/program/ProgramGallerySlider";
 import { programs, getProgramBySlug } from "@/data/programs";
 import { getGalleryForEvent } from "@/data/gallery";
-import { cn, STAGE_LABELS, STAGE_STYLES } from "@/lib/utils";
+import { cn, formatProgramDate, STAGE_LABELS, STAGE_STYLES } from "@/lib/utils";
 import { site } from "@/data/site";
 
 export function generateStaticParams() {
@@ -91,10 +92,11 @@ export default async function ProgramDetailPage(
 
   const isCompleted = program.status === "completed";
   const gallery = getGalleryForEvent(program.title);
-  const dateValue =
+  const rawDateValue =
     isCompleted && program.actualDate
       ? program.actualDate
       : program.estimatedDate;
+  const dateValue = formatProgramDate(rawDateValue);
   const eventStartDate = program.actualDate ?? program.estimatedDate;
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -262,22 +264,7 @@ export default async function ProgramDetailPage(
                 Dokumentasi
               </h3>
               {gallery.length > 0 ? (
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                  {gallery.map((item) => (
-                    <div
-                      key={item.id}
-                      className="relative aspect-square overflow-hidden rounded-card"
-                    >
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        sizes="(min-width: 640px) 33vw, 50vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
+                <ProgramGallerySlider items={gallery} />
               ) : (
                 <div className="relative aspect-[16/9] overflow-hidden rounded-card bg-navy shadow-md shadow-navy/15">
                   <Image

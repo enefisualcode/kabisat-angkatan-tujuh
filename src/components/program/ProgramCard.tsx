@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import StatusBadge from "@/components/ui/StatusBadge";
-import { cn } from "@/lib/utils";
+import { cn, formatProgramDate } from "@/lib/utils";
 import type { Program } from "@/types";
 
 export default function ProgramCard({
@@ -12,6 +12,12 @@ export default function ProgramCard({
   program: Program;
   className?: string;
 }) {
+  const dateValue = formatProgramDate(
+    program.status === "completed" && program.actualDate
+      ? program.actualDate
+      : program.estimatedDate
+  );
+
   return (
     <Link
       href={`/program/${program.slug}`}
@@ -42,12 +48,12 @@ export default function ProgramCard({
           {program.shortDescription}
         </p>
 
-        {program.estimatedDate || program.location ? (
+        {dateValue || program.location ? (
           <div className="mt-5 space-y-2 border-t border-navy/10 pt-4 text-sm text-navy/65">
-            {program.estimatedDate ? (
+            {dateValue ? (
               <span className="flex items-center gap-1">
                 <CalendarDays size={12} />
-                {program.estimatedDate}
+                {dateValue}
               </span>
             ) : null}
             {program.location ? (

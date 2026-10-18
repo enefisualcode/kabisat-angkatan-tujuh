@@ -52,3 +52,19 @@ export const STAGE_STYLES: Record<ProgramStage, string> = {
 export function formatYear(year: number) {
   return year.toString();
 }
+
+export function formatProgramDate(date?: string) {
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return date;
+
+  const parsed = new Date(`${date}T00:00:00.000Z`);
+  if (Number.isNaN(parsed.getTime()) || !parsed.toISOString().startsWith(date)) {
+    return date;
+  }
+
+  return new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(parsed);
+}
