@@ -45,12 +45,14 @@ export const programs: Program[] = [
     id: "prog-4",
     slug: "kabisat-run",
     title: "KABISAT Sport",
-    shortDescription: "Agenda lari bersama untuk menjaga kebugaran alumni.",
+    shortDescription:
+      "Agenda olahraga bersama untuk menjaga kebugaran dan kebersamaan alumni.",
     description:
-      "KABISAT Sport adalah agenda olahraga bersama yang digagas untuk menjaga kebugaran sekaligus mempererat kebersamaan alumni.",
+      "KABISAT Sport adalah wadah kegiatan olahraga bersama alumni, mulai dari futsal, lari, hingga olahraga lainnya, untuk menjaga kebugaran sekaligus mempererat kebersamaan.",
     status: "planned",
     stage: "coming-soon",
     icon: "footprints",
+    coverImage: "/gallery/kabisat-sport/futsal-zona-futsal.jpg",
     milestones: [],
   },
   {

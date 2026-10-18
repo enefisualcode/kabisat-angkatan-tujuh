@@ -101,6 +101,14 @@ export const gallery: GalleryItem[] = [
       location: "Depok",
       image: `/gallery/maulid-nabi-1448-h/maulid-2026-${photoNumber}.jpg`,
     })),
+  {
+    id: "kabisat-sport-futsal-zona-futsal",
+    title: "KABISAT Sport — Futsal di Zona Futsal",
+    event: "KABISAT Sport",
+    year: 2026,
+    location: "Zona Futsal",
+    image: "/gallery/kabisat-sport/futsal-zona-futsal.jpg",
+  },
 ];
 
 export function getFeaturedGallery() {
