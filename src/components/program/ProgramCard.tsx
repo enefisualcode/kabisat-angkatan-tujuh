@@ -22,9 +22,8 @@ export default function ProgramCard({
     >
       <div className="relative aspect-[16/9] overflow-hidden bg-navy/5">
         <Image
-          unoptimized
-          src="/og-image.png"
-          alt={program.title}
+          src={program.coverImage ?? "/og-image.png"}
+          alt={program.coverImage ? program.title : `Placeholder KABISAT untuk ${program.title}`}
           fill
           sizes="320px"
           className="object-cover transition-transform duration-500 group-hover:scale-105"

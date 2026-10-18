@@ -11,7 +11,7 @@ export const STATUS_LABELS: Record<ProgramStatus, string> = {
   planned: "Direncanakan",
   preparation: "Dalam Persiapan",
   upcoming: "Segera Dilaksanakan",
-  completed: "Selesai",
+  completed: "Telah Dilaksanakan",
   postponed: "Ditunda",
 };
 

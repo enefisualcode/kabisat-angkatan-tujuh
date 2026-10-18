@@ -11,10 +11,10 @@ export const programs: Program[] = [
       "Peringatan Maulid Nabi Muhammad SAW 1448 H sebagai wadah alumni untuk memperkuat kembali nilai-nilai keislaman dan kebersamaan.",
     estimatedDate: "Oktober 2026",
     location: "Depok",
-    status: "upcoming",
-    stage: "on-going",
+    status: "completed",
+    stage: "done",
     icon: "moon",
-    coverImage: "/programs/maulid-nabi-1448-h.png",
+    coverImage: "/programs/maulid-cover.jpg",
     milestones: [],
   },
   {

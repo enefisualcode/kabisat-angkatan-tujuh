@@ -116,7 +116,9 @@ export default async function ProgramDetailPage(
           ? `${site.url}${program.coverImage}`
           : `${site.url}${site.logos.symbol}`,
         startDate: eventStartDate,
-        eventStatus: "https://schema.org/EventScheduled",
+        eventStatus: isCompleted
+          ? "https://schema.org/EventCompleted"
+          : "https://schema.org/EventScheduled",
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
         organizer: { "@type": "Organization", name: site.name, url: site.url },
         location: program.location
