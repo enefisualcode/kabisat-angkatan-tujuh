@@ -11,7 +11,8 @@ export const STATUS_LABELS: Record<ProgramStatus, string> = {
   planned: "Direncanakan",
   preparation: "Dalam Persiapan",
   upcoming: "Segera Dilaksanakan",
-  completed: "Telah Dilaksanakan",
+  recurring: "Program Rutin",
+  completed: "Selesai",
   postponed: "Ditunda",
 };
 
@@ -20,6 +21,7 @@ export const STATUS_STYLES_ON_LIGHT: Record<ProgramStatus, string> = {
   planned: "bg-gray/15 text-gray-dark border-gray/30",
   preparation: "bg-gold/15 text-gold-dark border-gold/40",
   upcoming: "bg-gold text-navy border-gold",
+  recurring: "bg-emerald-100 text-emerald-800 border-emerald-300",
   completed: "bg-navy text-cream border-navy",
   postponed: "bg-[#5c5852]/10 text-[#5c5852] border-[#5c5852]/25",
 };
@@ -29,6 +31,7 @@ export const STATUS_STYLES_ON_DARK: Record<ProgramStatus, string> = {
   planned: "bg-cream/10 text-cream/70 border-cream/20",
   preparation: "bg-gold/20 text-gold-soft border-gold/40",
   upcoming: "bg-gold text-navy border-gold",
+  recurring: "bg-emerald-400/20 text-emerald-200 border-emerald-300/40",
   completed: "bg-cream text-navy border-cream",
   postponed: "bg-cream/10 text-cream/50 border-cream/20",
 };

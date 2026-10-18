@@ -17,7 +17,7 @@ const FILTERS = [
   {
     id: "berjalan",
     label: "Sedang Berjalan",
-    statuses: ["preparation", "upcoming"] as ProgramStatus[],
+    statuses: ["preparation", "upcoming", "recurring"] as ProgramStatus[],
   },
   {
     id: "selesai",

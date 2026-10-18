@@ -5,6 +5,7 @@ export type ProgramStatus =
   | "planned"
   | "preparation"
   | "upcoming"
+  | "recurring"
   | "completed"
   | "postponed";
 

@@ -26,8 +26,8 @@ export const programs: Program[] = [
       "Agenda olahraga bersama untuk mempererat kebersamaan alumni.",
     description:
       "KABISAT Sport adalah wadah kegiatan olahraga bersama alumni, mulai dari futsal, lari, hingga olahraga lainnya, untuk mempererat kebersamaan.",
-    status: "completed",
-    stage: "done",
+    status: "recurring",
+    stage: "on-going",
     icon: "footprints",
     coverImage: "/gallery/kabisat-sport/futsal-zona-futsal.jpg",
     milestones: [],
